@@ -32,11 +32,14 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/auth/register", {
-        username: form.username,
-        email: form.email,
-        password: form.password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/register`,
+        {
+          username: form.username,
+          email: form.email,
+          password: form.password,
+        },
+      );
 
       console.log("REGISTER RESPONSE:", res.data);
 
