@@ -13,6 +13,12 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    message: "Simcuits API is running",
+  });
+});
 
 const allowedOrigins = [
   "http://localhost:5173",
