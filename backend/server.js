@@ -13,10 +13,10 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
-app.get("/", (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({
     status: "ok",
-    message: "Simcuits API is running",
+    message: "Simcuits backend is running",
   });
 });
 
@@ -59,6 +59,6 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 connectDB();
 
-app.listen(PORT, () => {
-  console.log(`Server Started at ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Server Started at", PORT);
 });
