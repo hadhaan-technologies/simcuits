@@ -16,11 +16,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://simcuits.hadhaan.com",
-      "https://simcuits.founders-c77.workers.dev",
-    ],
+    origin: true,
     credentials: true,
   }),
 );
