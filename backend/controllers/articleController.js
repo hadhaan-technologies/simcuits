@@ -60,10 +60,12 @@ export async function getArticleBySlug(req, res) {
 export async function createArticle(req, res) {
   const { title, subtitle, excerpt, content, tags, status } = req.body;
 
-  const coverImage = req.file ? `/uploads/${req.file.filename}` : "";
+  const coverImage = req.file ? `/uploads/articles/${req.file.filename}` : "";
 
   if (!title || !excerpt || !content) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({
+      error: "Missing required fields",
+    });
   }
 
   const slug = title
@@ -73,10 +75,11 @@ export async function createArticle(req, res) {
     .replace(/\s+/g, "-");
 
   const existing = await Article.findOne({ slug });
+
   if (existing) {
-    return res
-      .status(409)
-      .json({ error: "An article with a similar title already exists" });
+    return res.status(409).json({
+      error: "An article with a similar title already exists",
+    });
   }
 
   const article = await Article.create({
