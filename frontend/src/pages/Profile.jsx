@@ -40,13 +40,15 @@ function Profile() {
       try {
         setLoading(true);
 
-        const response = await axios.get("/api/users/me", {
-          headers: {
-            Authorization: `Bearer ${auth?.accessToken}`,
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/users/me`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth?.accessToken}`,
+            },
+            withCredentials: true,
           },
-          withCredentials: true,
-        });
-
+        );
         setProfile(response.data);
         setDraft(response.data);
       } catch (error) {

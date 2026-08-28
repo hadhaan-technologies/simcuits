@@ -69,7 +69,7 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { username, bio, location, github, website } = req.body;
+    const { username, bio, location, website } = req.body;
 
     const user = await User.findById(req.user.id);
 
@@ -91,9 +91,9 @@ export const updateProfile = async (req, res) => {
       user.location = location.trim();
     }
 
-    if (github !== undefined) {
-      user.github = github.trim();
-    }
+    // if (github !== undefined) {
+    //   user.github = github.trim();
+    // }
 
     if (website !== undefined) {
       user.website = website.trim();
