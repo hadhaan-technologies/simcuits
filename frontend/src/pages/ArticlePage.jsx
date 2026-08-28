@@ -150,7 +150,7 @@ export default function ArticlePage() {
             {/* Cover */}
             {article.coverImage && (
               <img
-                src={article.coverImage}
+                src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${article.coverImage}`}
                 alt={article.title}
                 className="mt-8 w-full rounded-xl border border-white/10 object-cover"
               />

@@ -66,6 +66,7 @@ function Profile() {
   const save = async () => {
     try {
       setSaving(true);
+      
 
       const response = await axios.put(
         "/api/users/me",
