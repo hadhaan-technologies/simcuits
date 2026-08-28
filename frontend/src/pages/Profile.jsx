@@ -11,13 +11,13 @@ import {
   X,
 } from "lucide-react";
 
-function computeInitials(name) {
+function computeInitials(name = "") {
   return (
-    name
+    String(name)
       .split(/\s+/)
       .filter(Boolean)
       .slice(0, 2)
-      .map((word) => word[0].toUpperCase())
+      .map((word) => word[0]?.toUpperCase())
       .join("") || "?"
   );
 }
@@ -130,15 +130,11 @@ function Profile() {
             </p>
           </div>
 
-
-
           <div className="glass-strong rounded-2xl p-6 border border-white/10 relative overflow-hidden">
             <div className="relative flex flex-col md:flex-row gap-6 items-start">
-
               <div className="h-24 w-24 shrink-0 rounded-2xl bg-primary flex items-center justify-center text-2xl font-semibold text-primary-foreground">
                 {computeInitials(profile.username)}
               </div>
-
 
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -149,11 +145,9 @@ function Profile() {
                   </span>
                 </div>
 
-
                 <div className="text-sm text-muted-foreground mt-1">
                   {profile.bio}
                 </div>
-
 
                 <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
                   {profile.location && (
