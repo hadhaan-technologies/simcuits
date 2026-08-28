@@ -1,5 +1,5 @@
 import express from "express";
-import multer from "multer";
+import { uploadArticleImage } from "../middleware/upload.js";
 import {
   getArticles,
   getArticleBySlug,
@@ -12,7 +12,6 @@ import {
 import { verifyToken, requireRole } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
 
 router.get("/", getArticles);
 router.get("/mine", verifyToken, requireRole("author", "admin"), getMyArticles);
@@ -22,7 +21,7 @@ router.post(
   "/",
   verifyToken,
   requireRole("author", "admin"),
-  upload.single("coverImage"),
+  uploadArticleImage.single("coverImage"),
   createArticle,
 );
 
