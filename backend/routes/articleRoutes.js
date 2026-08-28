@@ -1,5 +1,5 @@
 import express from "express";
-import { uploadArticleImage } from "../middleware/upload.js";
+import { uploadArticleImage } from "../middleware/uploadMiddleware.js";
 import {
   getArticles,
   getArticleBySlug,
