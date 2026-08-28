@@ -37,11 +37,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
 
-    github: {
-      type: String,
-      default: "",
-      trim: true,
-    },
+    // github: {
+    //   type: String,
+    //   default: "",
+    //   trim: true,
+    // },
 
     website: {
       type: String,
