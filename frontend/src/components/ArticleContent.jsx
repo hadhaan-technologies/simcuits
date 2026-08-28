@@ -38,7 +38,11 @@ export function renderArticleHtml(content) {
   let html = "";
 
   try {
-    html = generateHTML(content || emptyDoc, extensions);
+    // MongoDB currently stores TipTap content as a JSON string
+    const parsedContent =
+      typeof content === "string" ? JSON.parse(content) : content || emptyDoc;
+
+    html = generateHTML(parsedContent, extensions);
   } catch (error) {
     console.error("ARTICLE RENDER ERROR:", error);
     return "";
@@ -54,29 +58,22 @@ export function renderArticleHtml(content) {
       i: [],
       u: [],
       s: [],
-
       a: ["href", "target", "rel"],
-
       ul: ["class"],
       ol: ["class"],
       li: ["class"],
-
       h1: ["class", "style"],
       h2: ["class", "style"],
       h3: ["class", "style"],
       h4: ["class", "style"],
-
       blockquote: ["class"],
       pre: ["class"],
       code: ["class"],
-
       img: ["src", "alt", "title", "class", "loading"],
-
       hr: ["class"],
     },
 
     stripIgnoreTag: true,
-
     stripIgnoreTagBody: ["script", "style"],
   });
 }
