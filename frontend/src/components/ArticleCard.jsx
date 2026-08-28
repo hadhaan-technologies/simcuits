@@ -12,7 +12,7 @@ export default function ArticleCard({ article, featured = false }) {
           className={featured ? "h-56 overflow-hidden" : "h-40 overflow-hidden"}
         >
           <img
-            src={`http://localhost:5000${article.coverImage}`}
+            src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${article.coverImage}`}
             alt={article.title}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
