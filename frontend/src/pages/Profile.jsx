@@ -485,7 +485,7 @@ function Profile() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 p-6 border-t border-primary/5">
+            <div className="flex justify-end gap-2 p-6 border-t border-white/5">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
