@@ -68,7 +68,7 @@ function Profile() {
       setSaving(true);
 
       const response = await axios.put(
-        "/api/users/me",
+        `${import.meta.env.VITE_API_URL}/users/me`,
         {
           username: draft.username,
           bio: draft.bio,
