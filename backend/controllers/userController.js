@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import User from '../models/User.js';
 
 export const getUsers = async (req, res) => {
   try {
@@ -8,7 +8,7 @@ export const getUsers = async (req, res) => {
 
     const total = await User.countDocuments();
 
-    const users = await User.find().skip(skip).limit(limit).select("-password");
+    const users = await User.find().skip(skip).limit(limit).select('-password');
 
     res.status(200).json({
       users,
@@ -17,10 +17,10 @@ export const getUsers = async (req, res) => {
       currentPage: page,
     });
   } catch (err) {
-    console.error("GET USERS ERROR:", err);
+    console.error('GET USERS ERROR:', err);
 
     res.status(500).json({
-      message: "Failed to fetch users",
+      message: 'Failed to fetch users',
     });
   }
 };
@@ -31,38 +31,38 @@ export const deleteUser = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
     res.status(200).json({
-      message: "User deleted successfully",
+      message: 'User deleted successfully',
     });
   } catch (error) {
-    console.error("DELETE USER ERROR:", error);
+    console.error('DELETE USER ERROR:', error);
 
     res.status(500).json({
-      message: "Failed to delete user",
+      message: 'Failed to delete user',
     });
   }
 };
 
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id).select('-password');
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
     res.status(200).json(user);
   } catch (error) {
-    console.error("GET PROFILE ERROR:", error);
+    console.error('GET PROFILE ERROR:', error);
 
     res.status(500).json({
-      message: "Failed to fetch profile",
+      message: 'Failed to fetch profile',
     });
   }
 };
@@ -75,7 +75,7 @@ export const updateProfile = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
@@ -101,28 +101,28 @@ export const updateProfile = async (req, res) => {
 
     await user.save();
 
-    const updatedUser = await User.findById(req.user.id).select("-password");
+    const updatedUser = await User.findById(req.user.id).select('-password');
 
     res.status(200).json({
-      message: "Profile updated successfully",
+      message: 'Profile updated successfully',
       user: updatedUser,
     });
   } catch (error) {
-    console.error("UPDATE PROFILE ERROR:", error);
+    console.error('UPDATE PROFILE ERROR:', error);
 
     res.status(500).json({
-      message: "Failed to update profile",
+      message: 'Failed to update profile',
     });
   }
 };
 
 export const getActivity = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("activity");
+    const user = await User.findById(req.user.id).select('activity');
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found",
+        message: 'User not found',
       });
     }
 
@@ -130,10 +130,10 @@ export const getActivity = async (req, res) => {
       activity: user.activity || [],
     });
   } catch (error) {
-    console.error("Get activity error:", error);
+    console.error('Get activity error:', error);
 
     res.status(500).json({
-      message: "Server error",
+      message: 'Server error',
     });
   }
 };

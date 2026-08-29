@@ -1,25 +1,25 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
-import Navbar from "./components/Navbar";
-import AppSidebar from "./components/AppSideBar";
+import Navbar from './components/Navbar';
+import AppSidebar from './components/AppSideBar';
 
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
-import Index from "./pages/index";
-import Problems from "./pages/Problems";
-import CreateArticle from "./pages/CreateArticle";
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
+import Index from './pages/index';
+import Problems from './pages/Problems';
+import CreateArticle from './pages/CreateArticle';
 
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from './components/PrivateRoute';
 
-import AdminDashboard from "./pages/AdminDashboard";
-import AuthorDashboard from "./pages/AuthorDashboard";
-import UserDashboard from "./pages/UserDashboard";
-import Learn from "./pages/Learn";
-import ArticlePage from "./pages/ArticlePage";
-import { SiteFooter } from "./components/SiteFooter";
+import AdminDashboard from './pages/AdminDashboard';
+import AuthorDashboard from './pages/AuthorDashboard';
+import UserDashboard from './pages/UserDashboard';
+import Learn from './pages/Learn';
+import ArticlePage from './pages/ArticlePage';
+import { SiteFooter } from './components/SiteFooter';
 
 // ========================================
 // APP LAYOUT
@@ -28,7 +28,7 @@ import { SiteFooter } from "./components/SiteFooter";
 function AppLayout() {
   const { auth } = useAuth();
   const location = useLocation();
-  const isHome = location.pathname === "/";
+  const isHome = location.pathname === '/';
   const showNavbar = isHome;
   const showSidebar = auth?.accessToken && !isHome;
 
@@ -37,7 +37,7 @@ function AppLayout() {
       {showNavbar && <Navbar />}
       <div className="flex">
         {showSidebar && <AppSidebar />}
-        <div className={showSidebar ? "flex-1 min-w-0" : "w-full"}>
+        <div className={showSidebar ? 'flex-1 min-w-0' : 'w-full'}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
@@ -48,13 +48,13 @@ function AppLayout() {
               element={
                 <PrivateRoute>
                   {(auth) => {
-                    if (auth.user?.role == "admin") {
+                    if (auth.user?.role == 'admin') {
                       return <AdminDashboard />;
                     }
-                    if (auth.user?.role == "author") {
+                    if (auth.user?.role == 'author') {
                       return <AuthorDashboard />;
                     }
-                    if (auth.user?.role == "user") {
+                    if (auth.user?.role == 'user') {
                       return <UserDashboard />;
                     }
                   }}

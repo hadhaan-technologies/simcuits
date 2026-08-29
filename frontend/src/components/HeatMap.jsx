@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const levelClass = [
-  "bg-white/[0.04]",
-  "bg-primary/20",
-  "bg-primary/40",
-  "bg-primary/60",
-  "bg-primary/90",
+  'bg-white/[0.04]',
+  'bg-primary/20',
+  'bg-primary/40',
+  'bg-primary/60',
+  'bg-primary/90',
 ];
 
 function getLevel(count) {
@@ -24,9 +24,9 @@ function ActivityHeatmap() {
   useEffect(() => {
     const fetchActivity = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        const token = localStorage.getItem('accessToken');
 
-        const response = await axios.get("/api/users/activity", {
+        const response = await axios.get('/api/users/activity', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -35,7 +35,7 @@ function ActivityHeatmap() {
 
         setDays(response.data.activity || []);
       } catch (error) {
-        console.error("Failed to fetch activity:", error);
+        console.error('Failed to fetch activity:', error);
       } finally {
         setLoading(false);
       }
@@ -45,9 +45,7 @@ function ActivityHeatmap() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="text-sm text-muted-foreground">Loading activity...</div>
-    );
+    return <div className="text-sm text-muted-foreground">Loading activity...</div>;
   }
 
   const weeks = [];
@@ -67,10 +65,7 @@ function ActivityHeatmap() {
           <span>Less</span>
 
           {levelClass.map((className, index) => (
-            <span
-              key={index}
-              className={`h-3 w-3 rounded-[3px] ${className}`}
-            />
+            <span key={index} className={`h-3 w-3 rounded-[3px] ${className}`} />
           ))}
 
           <span>More</span>
@@ -84,9 +79,7 @@ function ActivityHeatmap() {
               {week.map((day) => (
                 <span
                   key={day.date}
-                  title={`${day.count} submission${
-                    day.count === 1 ? "" : "s"
-                  } · ${day.date}`}
+                  title={`${day.count} submission${day.count === 1 ? '' : 's'} · ${day.date}`}
                   className={`h-3 w-3 rounded-[3px] transition-transform hover:scale-125 ${
                     levelClass[getLevel(day.count)]
                   }`}

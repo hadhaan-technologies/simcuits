@@ -1,14 +1,14 @@
-import express from "express";
-import Problem from "../models/Problem.js";
+import express from 'express';
+import Problem from '../models/Problem.js';
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const problems = await Problem.find({
-      status: "published",
+      status: 'published',
     })
-      .populate("author", "username email")
+      .populate('author', 'username email')
       .sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -16,11 +16,11 @@ router.get("/", async (req, res) => {
       problems,
     });
   } catch (error) {
-    console.error("Failed to fetch problems:", error);
+    console.error('Failed to fetch problems:', error);
 
     res.status(500).json({
       success: false,
-      message: "Failed to fetch problems",
+      message: 'Failed to fetch problems',
     });
   }
 });

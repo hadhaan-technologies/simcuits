@@ -1,24 +1,17 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useAuth } from "../context/AuthContext";
-import ActivityHeatmap from "../components/HeatMap";
-import {
-  MapPin,
-  Link as LinkIcon,
-  Award,
-  Cpu,
-  Activity,
-  X,
-} from "lucide-react";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import ActivityHeatmap from '../components/HeatMap';
+import { MapPin, Link as LinkIcon, Award, Cpu, Activity, X } from 'lucide-react';
 
-function computeInitials(name = "") {
+function computeInitials(name = '') {
   return (
     String(name)
       .split(/\s+/)
       .filter(Boolean)
       .slice(0, 2)
       .map((word) => word[0]?.toUpperCase())
-      .join("") || "?"
+      .join('') || '?'
   );
 }
 
@@ -40,19 +33,16 @@ function Profile() {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/users/me`,
-          {
-            headers: {
-              Authorization: `Bearer ${auth?.accessToken}`,
-            },
-            withCredentials: true,
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/users/me`, {
+          headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
           },
-        );
+          withCredentials: true,
+        });
         setProfile(response.data);
         setDraft(response.data);
       } catch (error) {
-        console.error("Failed to fetch profile:", error);
+        console.error('Failed to fetch profile:', error);
       } finally {
         setLoading(false);
       }
@@ -81,7 +71,7 @@ function Profile() {
             Authorization: `Bearer ${auth.accessToken}`,
           },
           withCredentials: true,
-        },
+        }
       );
 
       setProfile(response.data.user);
@@ -89,21 +79,21 @@ function Profile() {
 
       setOpen(false);
     } catch (error) {
-      console.error("Failed to update profile:", error);
+      console.error('Failed to update profile:', error);
     } finally {
       setSaving(false);
     }
   };
 
   const skills = [
-    { k: "GPIO", v: 92 },
-    { k: "UART", v: 81 },
-    { k: "PWM", v: 88 },
-    { k: "Timers", v: 74 },
-    { k: "Interrupts", v: 68 },
-    { k: "ADC", v: 71 },
-    { k: "I²C / SPI", v: 60 },
-    { k: "RTOS", v: 45 },
+    { k: 'GPIO', v: 92 },
+    { k: 'UART', v: 81 },
+    { k: 'PWM', v: 88 },
+    { k: 'Timers', v: 74 },
+    { k: 'Interrupts', v: 68 },
+    { k: 'ADC', v: 71 },
+    { k: 'I²C / SPI', v: 60 },
+    { k: 'RTOS', v: 45 },
   ];
   if (loading) {
     return (
@@ -147,9 +137,7 @@ function Profile() {
                   </span>
                 </div>
 
-                <div className="text-sm text-muted-foreground mt-1">
-                  {profile.bio}
-                </div>
+                <div className="text-sm text-muted-foreground mt-1">{profile.bio}</div>
 
                 <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground">
                   {profile.location && (
@@ -166,7 +154,7 @@ function Profile() {
 
                       <a
                         href={
-                          profile.website.startsWith("http")
+                          profile.website.startsWith('http')
                             ? profile.website
                             : `https://${profile.website}`
                         }
@@ -200,15 +188,12 @@ function Profile() {
 
             <div className="relative mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                ["Solved", profile.problemsSolved],
-                ["Streak", `${profile.currentStreak}d`],
-                ["XP", profile.xp],
-                ["Level", profile.level],
+                ['Solved', profile.problemsSolved],
+                ['Streak', `${profile.currentStreak}d`],
+                ['XP', profile.xp],
+                ['Level', profile.level],
               ].map(([k, v]) => (
-                <div
-                  key={k}
-                  className="rounded-xl border border-white/5 bg-card/40 p-4"
-                >
+                <div key={k} className="rounded-xl border border-white/5 bg-card/40 p-4">
                   <div className="text-xs text-muted-foreground">{k}</div>
 
                   <div className="text-2xl font-semibold mt-1">{v}</div>
@@ -243,11 +228,11 @@ function Profile() {
                       key={index}
                       className={`h-3 w-3 rounded-[3px] ${
                         [
-                          "bg-white/[0.04]",
-                          "bg-primary/20",
-                          "bg-primary/40",
-                          "bg-primary/60",
-                          "bg-primary/90",
+                          'bg-white/[0.04]',
+                          'bg-primary/20',
+                          'bg-primary/40',
+                          'bg-primary/60',
+                          'bg-primary/90',
                         ][index]
                       }`}
                     />
@@ -273,17 +258,14 @@ function Profile() {
 
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {[
-                  "GPIO Guru",
-                  "ISR Whisperer",
-                  "PWM Pro",
-                  "100 Solved",
-                  "14d Streak",
-                  "Top 10%",
+                  'GPIO Guru',
+                  'ISR Whisperer',
+                  'PWM Pro',
+                  '100 Solved',
+                  '14d Streak',
+                  'Top 10%',
                 ].map((badge) => (
-                  <div
-                    key={badge}
-                    className="rounded-xl border border-border p-3 text-center"
-                  >
+                  <div key={badge} className="rounded-xl border border-border p-3 text-center">
                     <div className="mx-auto h-10 w-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                       <Cpu className="h-4 w-4" />
                     </div>
@@ -316,9 +298,7 @@ function Profile() {
                     <div className="flex justify-between text-xs">
                       <span>{skill.k}</span>
 
-                      <span className="font-mono text-muted-foreground">
-                        {skill.v}%
-                      </span>
+                      <span className="font-mono text-muted-foreground">{skill.v}%</span>
                     </div>
 
                     <div className="mt-1.5 h-1.5 rounded-full bg-white/5 overflow-hidden">
@@ -344,39 +324,32 @@ function Profile() {
               <div className="mt-4 divide-y divide-white/5">
                 {[
                   {
-                    t: "PWM Dimmer",
-                    s: "Accepted",
-                    time: "2m ago",
+                    t: 'PWM Dimmer',
+                    s: 'Accepted',
+                    time: '2m ago',
                   },
                   {
-                    t: "UART Echo",
-                    s: "Wrong waveform",
-                    time: "14m ago",
+                    t: 'UART Echo',
+                    s: 'Wrong waveform',
+                    time: '14m ago',
                   },
                   {
-                    t: "Debounce SW1",
-                    s: "Accepted",
-                    time: "1h ago",
+                    t: 'Debounce SW1',
+                    s: 'Accepted',
+                    time: '1h ago',
                   },
                   {
-                    t: "ADC moving avg",
-                    s: "Accepted",
-                    time: "yesterday",
+                    t: 'ADC moving avg',
+                    s: 'Accepted',
+                    time: 'yesterday',
                   },
                 ].map((row) => (
-                  <div
-                    key={row.t + row.time}
-                    className="py-3 flex items-center text-sm"
-                  >
+                  <div key={row.t + row.time} className="py-3 flex items-center text-sm">
                     <div className="flex-1">{row.t}</div>
 
-                    <div className="text-xs text-muted-foreground font-mono mr-4">
-                      {row.s}
-                    </div>
+                    <div className="text-xs text-muted-foreground font-mono mr-4">{row.s}</div>
 
-                    <div className="text-xs text-muted-foreground font-mono">
-                      {row.time}
-                    </div>
+                    <div className="text-xs text-muted-foreground font-mono">{row.time}</div>
                   </div>
                 ))}
               </div>
@@ -426,7 +399,7 @@ function Profile() {
                 </label>
 
                 <input
-                  value={draft.username || ""}
+                  value={draft.username || ''}
                   onChange={(e) =>
                     setDraft({
                       ...draft,
@@ -441,7 +414,7 @@ function Profile() {
                 </label>
 
                 <textarea
-                  value={draft.bio || ""}
+                  value={draft.bio || ''}
                   onChange={(e) =>
                     setDraft({
                       ...draft,
@@ -458,7 +431,7 @@ function Profile() {
                   </label>
 
                   <input
-                    value={draft.location || ""}
+                    value={draft.location || ''}
                     onChange={(e) =>
                       setDraft({
                         ...draft,
@@ -474,7 +447,7 @@ function Profile() {
                 </label>
 
                 <input
-                  value={draft.website || ""}
+                  value={draft.website || ''}
                   onChange={(e) =>
                     setDraft({
                       ...draft,
@@ -495,7 +468,7 @@ function Profile() {
               </button>
 
               <button onClick={save} disabled={saving}>
-                {saving ? "Saving..." : "Save changes"}
+                {saving ? 'Saving...' : 'Save changes'}
               </button>
             </div>
           </div>

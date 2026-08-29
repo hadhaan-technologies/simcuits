@@ -1,62 +1,56 @@
-import { useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/simcuitLogo.ico";
+import { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/simcuitLogo.ico';
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    setError("");
-    setSuccess("");
+    setError('');
+    setSuccess('');
 
     // Check passwords
     if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
+      setError('Passwords do not match.');
       return;
     }
 
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
-        {
-          username: form.username,
-          email: form.email,
-          password: form.password,
-        },
-      );
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/register`, {
+        username: form.username,
+        email: form.email,
+        password: form.password,
+      });
 
-      console.log("REGISTER RESPONSE:", res.data);
+      console.log('REGISTER RESPONSE:', res.data);
 
-      setSuccess("Account created successfully.");
+      setSuccess('Account created successfully.');
 
       // Redirect to login
       setTimeout(() => {
-        navigate("/login");
+        navigate('/login');
       }, 1000);
     } catch (error) {
-      console.error("REGISTER ERROR:", error);
-      console.error("SERVER RESPONSE:", error.response?.data);
+      console.error('REGISTER ERROR:', error);
+      console.error('SERVER RESPONSE:', error.response?.data);
 
-      setError(
-        error.response?.data?.message ||
-          "Registration failed. Please try again.",
-      );
+      setError(error.response?.data?.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -69,34 +63,28 @@ const Register = () => {
         {/* Brand */}
         <Link to="/" className="inline-flex items-center gap-2">
           <img src={logo} alt="Simcuits" className="h-8 w-8 object-contain" />
-          <span className="font-display text-base font-semibold tracking-tight">
-            Pulse
-          </span>
+          <span className="font-display text-base font-semibold tracking-tight">Pulse</span>
         </Link>
 
         {/* Content */}
         <div className="relative max-w-md">
-          <p className="text-xs font-mono text-muted-foreground mb-6">
-            — Build. Test. Understand.
-          </p>
+          <p className="text-xs font-mono text-muted-foreground mb-6">— Build. Test. Understand.</p>
 
           <h2 className="font-display text-4xl leading-[1.1] tracking-tight text-foreground">
             Learn embedded systems,
             <br />
-            <span className="text-muted-foreground">
-              one problem at a time.
-            </span>
+            <span className="text-muted-foreground">one problem at a time.</span>
           </h2>
 
           <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
-            Practice firmware, understand hardware behavior, and sharpen your
-            embedded engineering skills through focused challenges.
+            Practice firmware, understand hardware behavior, and sharpen your embedded engineering
+            skills through focused challenges.
           </p>
 
           <figure className="mt-10 border-l-2 border-foreground/80 pl-4">
             <blockquote className="text-sm text-foreground/80 leading-relaxed">
-              "The best engineers don't just write code. They understand what
-              happens underneath it."
+              "The best engineers don't just write code. They understand what happens underneath
+              it."
             </blockquote>
 
             <figcaption className="mt-2 text-xs text-muted-foreground">
@@ -126,9 +114,7 @@ const Register = () => {
                 P
               </div>
 
-              <span className="font-display text-base font-semibold tracking-tight">
-                Pulse
-              </span>
+              <span className="font-display text-base font-semibold tracking-tight">Pulse</span>
             </Link>
           </div>
 
@@ -138,9 +124,7 @@ const Register = () => {
               Create your account
             </h1>
 
-            <p className="text-sm text-muted-foreground">
-              Start practicing in under a minute.
-            </p>
+            <p className="text-sm text-muted-foreground">Start practicing in under a minute.</p>
           </div>
 
           {/* Social Login */}
@@ -189,10 +173,7 @@ const Register = () => {
           <form className="space-y-4" onSubmit={handleRegister}>
             {/* Username */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="username"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="username" className="text-xs font-medium text-foreground">
                 Username
               </label>
 
@@ -214,10 +195,7 @@ const Register = () => {
 
             {/* Email */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="email"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="email" className="text-xs font-medium text-foreground">
                 Email
               </label>
 
@@ -239,10 +217,7 @@ const Register = () => {
 
             {/* Password */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="password"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="password" className="text-xs font-medium text-foreground">
                 Password
               </label>
 
@@ -264,10 +239,7 @@ const Register = () => {
 
             {/* Confirm Password */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="confirmPassword"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="confirmPassword" className="text-xs font-medium text-foreground">
                 Confirm password
               </label>
               <input
@@ -298,19 +270,17 @@ const Register = () => {
               disabled={loading}
               className="group w-full h-10 mt-2 rounded-md bg-primary text-primary-foreground flex items-center justify-center gap-2 text-sm font-medium transition hover:opacity-90 disabled:opacity-50"
             >
-              {loading ? "Creating account..." : "Create account"}
+              {loading ? 'Creating account...' : 'Create account'}
 
               {!loading && (
-                <span className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
               )}
             </button>
           </form>
 
           {/* Login */}
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link
               to="/login"
               className="text-foreground font-medium hover:underline underline-offset-4"
@@ -321,18 +291,12 @@ const Register = () => {
 
           {/* Terms */}
           <p className="mt-10 text-center text-[11px] text-muted-foreground leading-relaxed">
-            By continuing you agree to our{" "}
-            <Link
-              to="/terms"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
+            By continuing you agree to our{' '}
+            <Link to="/terms" className="underline underline-offset-2 hover:text-foreground">
               Terms
-            </Link>{" "}
-            and{" "}
-            <Link
-              to="/privacy"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
+            </Link>{' '}
+            and{' '}
+            <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">
               Privacy Policy
             </Link>
             .

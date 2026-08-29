@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
-import Link from "@tiptap/extension-link";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import Placeholder from "@tiptap/extension-placeholder";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Placeholder from '@tiptap/extension-placeholder';
 
 import {
   AlignCenter,
@@ -28,9 +28,9 @@ import {
   Save,
   Settings,
   Underline as UnderlineIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
-import ArticleContent from "./ArticleContent";
+import ArticleContent from './ArticleContent';
 
 function ToolbarButton({ children, onClick, label, active = false }) {
   return (
@@ -43,8 +43,8 @@ function ToolbarButton({ children, onClick, label, active = false }) {
       onClick={onClick}
       className={`grid h-8 w-8 place-items-center rounded-md border transition ${
         active
-          ? "border-primary bg-primary/10 text-primary"
-          : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+          ? 'border-primary bg-primary/10 text-primary'
+          : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground'
       }`}
     >
       {children}
@@ -54,24 +54,24 @@ function ToolbarButton({ children, onClick, label, active = false }) {
 
 function EditorToolbar({ editor }) {
   const [imageInput] = useState(() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
     return input;
   });
 
   if (!editor) return null;
 
   const addImageFromDevice = () => {
-    imageInput.value = "";
+    imageInput.value = '';
 
     imageInput.onchange = () => {
       const file = imageInput.files?.[0];
 
       if (!file) return;
 
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file.");
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file.');
         return;
       }
 
@@ -98,24 +98,24 @@ function EditorToolbar({ editor }) {
   };
 
   const setLink = () => {
-    const previousUrl = editor.getAttributes("link").href || "";
+    const previousUrl = editor.getAttributes('link').href || '';
 
-    const url = window.prompt("Enter URL", previousUrl || "https://");
+    const url = window.prompt('Enter URL', previousUrl || 'https://');
 
     if (url === null) return;
 
-    if (url === "") {
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
       return;
     }
 
     editor
       .chain()
       .focus()
-      .extendMarkRange("link")
+      .extendMarkRange('link')
       .setLink({
         href: url,
-        target: "_blank",
+        target: '_blank',
       })
       .run();
   };
@@ -124,7 +124,7 @@ function EditorToolbar({ editor }) {
     <div className="mb-4 flex flex-wrap items-center gap-1 rounded-xl border border-border bg-muted/30 p-2">
       <ToolbarButton
         label="Paragraph"
-        active={editor.isActive("paragraph")}
+        active={editor.isActive('paragraph')}
         onClick={() => editor.chain().focus().setParagraph().run()}
       >
         <Pilcrow size={15} />
@@ -132,7 +132,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 1"
-        active={editor.isActive("heading", { level: 1 })}
+        active={editor.isActive('heading', { level: 1 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
       >
         <Heading1 size={15} />
@@ -140,7 +140,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 2"
-        active={editor.isActive("heading", { level: 2 })}
+        active={editor.isActive('heading', { level: 2 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
       >
         <Heading2 size={15} />
@@ -148,7 +148,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 3"
-        active={editor.isActive("heading", { level: 3 })}
+        active={editor.isActive('heading', { level: 3 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
       >
         <Heading3 size={15} />
@@ -158,7 +158,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Bold"
-        active={editor.isActive("bold")}
+        active={editor.isActive('bold')}
         onClick={() => editor.chain().focus().toggleBold().run()}
       >
         <Bold size={15} />
@@ -166,7 +166,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Italic"
-        active={editor.isActive("italic")}
+        active={editor.isActive('italic')}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       >
         <Italic size={15} />
@@ -174,17 +174,13 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Underline"
-        active={editor.isActive("underline")}
+        active={editor.isActive('underline')}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
         <UnderlineIcon size={15} />
       </ToolbarButton>
 
-      <ToolbarButton
-        label="Insert link"
-        active={editor.isActive("link")}
-        onClick={setLink}
-      >
+      <ToolbarButton label="Insert link" active={editor.isActive('link')} onClick={setLink}>
         <Link2 size={15} />
       </ToolbarButton>
 
@@ -192,24 +188,24 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Align left"
-        active={editor.isActive({ textAlign: "left" })}
-        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        active={editor.isActive({ textAlign: 'left' })}
+        onClick={() => editor.chain().focus().setTextAlign('left').run()}
       >
         <AlignLeft size={15} />
       </ToolbarButton>
 
       <ToolbarButton
         label="Align center"
-        active={editor.isActive({ textAlign: "center" })}
-        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        active={editor.isActive({ textAlign: 'center' })}
+        onClick={() => editor.chain().focus().setTextAlign('center').run()}
       >
         <AlignCenter size={15} />
       </ToolbarButton>
 
       <ToolbarButton
         label="Align right"
-        active={editor.isActive({ textAlign: "right" })}
-        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        active={editor.isActive({ textAlign: 'right' })}
+        onClick={() => editor.chain().focus().setTextAlign('right').run()}
       >
         <AlignRight size={15} />
       </ToolbarButton>
@@ -218,7 +214,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Bullet list"
-        active={editor.isActive("bulletList")}
+        active={editor.isActive('bulletList')}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
         <List size={15} />
@@ -226,7 +222,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Numbered list"
-        active={editor.isActive("orderedList")}
+        active={editor.isActive('orderedList')}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered size={15} />
@@ -234,7 +230,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Quote"
-        active={editor.isActive("blockquote")}
+        active={editor.isActive('blockquote')}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
         <Quote size={15} />
@@ -242,16 +238,13 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Code block"
-        active={editor.isActive("codeBlock")}
+        active={editor.isActive('codeBlock')}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
       >
         <Code2 size={15} />
       </ToolbarButton>
 
-      <ToolbarButton
-        label="Insert image from device"
-        onClick={addImageFromDevice}
-      >
+      <ToolbarButton label="Insert image from device" onClick={addImageFromDevice}>
         <ImageIcon size={15} />
       </ToolbarButton>
 
@@ -266,7 +259,7 @@ function EditorToolbar({ editor }) {
 }
 
 function calculateReadingTime(doc) {
-  let text = "";
+  let text = '';
 
   const walk = (node) => {
     if (node.text) {
@@ -285,15 +278,8 @@ function calculateReadingTime(doc) {
   return Math.max(1, Math.ceil(words / 200));
 }
 
-export default function ArticleEditor({
-  form,
-  setForm,
-  onSave,
-  onPublish,
-  loading,
-  error,
-}) {
-  const [activeTab, setActiveTab] = useState("write");
+export default function ArticleEditor({ form, setForm, onSave, onPublish, loading, error }) {
+  const [activeTab, setActiveTab] = useState('write');
 
   const extensions = useMemo(
     () => [
@@ -306,18 +292,18 @@ export default function ArticleEditor({
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          target: "_blank",
-          rel: "noopener noreferrer",
+          target: '_blank',
+          rel: 'noopener noreferrer',
         },
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ['heading', 'paragraph'],
       }),
       Placeholder.configure({
-        placeholder: "Start writing your article...",
+        placeholder: 'Start writing your article...',
       }),
     ],
-    [],
+    []
   );
 
   const editor = useEditor({
@@ -327,7 +313,7 @@ export default function ArticleEditor({
     editorProps: {
       attributes: {
         class:
-          "min-h-[500px] rounded-xl border border-border bg-background px-6 py-5 outline-none focus:border-primary/40 prose-article",
+          'min-h-[500px] rounded-xl border border-border bg-background px-6 py-5 outline-none focus:border-primary/40 prose-article',
       },
     },
 
@@ -354,7 +340,7 @@ export default function ArticleEditor({
         ...updates,
       }));
     },
-    [setForm],
+    [setForm]
   );
 
   const handleCoverImage = (event) => {
@@ -362,8 +348,8 @@ export default function ArticleEditor({
 
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      alert("Please select an image file.");
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
       return;
     }
 
@@ -381,7 +367,7 @@ export default function ArticleEditor({
   const handleTags = (value) => {
     patch({
       tags: value
-        .split(",")
+        .split(',')
         .map((tag) => tag.trim().toLowerCase())
         .filter(Boolean),
     });
@@ -403,12 +389,10 @@ export default function ArticleEditor({
 
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full border border-border px-3 py-1 text-xs">
-            {form.status === "published" ? "Published" : "Draft"}
+            {form.status === 'published' ? 'Published' : 'Draft'}
           </span>
 
-          <span className="text-xs text-muted-foreground">
-            {readingMinutes} min read
-          </span>
+          <span className="text-xs text-muted-foreground">{readingMinutes} min read</span>
 
           <button
             type="button"
@@ -418,7 +402,7 @@ export default function ArticleEditor({
           >
             <Save size={15} />
 
-            {loading ? "Saving..." : "Save Draft"}
+            {loading ? 'Saving...' : 'Save Draft'}
           </button>
 
           <button
@@ -427,7 +411,7 @@ export default function ArticleEditor({
             disabled={loading}
             className="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground hover:opacity-90 disabled:opacity-50"
           >
-            {loading ? "Publishing..." : "Publish"}
+            {loading ? 'Publishing...' : 'Publish'}
           </button>
         </div>
       </div>
@@ -442,11 +426,9 @@ export default function ArticleEditor({
       <div className="mb-5 flex gap-1 rounded-lg border border-border bg-muted/30 p-1">
         <button
           type="button"
-          onClick={() => setActiveTab("write")}
+          onClick={() => setActiveTab('write')}
           className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm ${
-            activeTab === "write"
-              ? "bg-background shadow-sm"
-              : "text-muted-foreground"
+            activeTab === 'write' ? 'bg-background shadow-sm' : 'text-muted-foreground'
           }`}
         >
           <Pilcrow size={15} />
@@ -455,11 +437,9 @@ export default function ArticleEditor({
 
         <button
           type="button"
-          onClick={() => setActiveTab("settings")}
+          onClick={() => setActiveTab('settings')}
           className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm ${
-            activeTab === "settings"
-              ? "bg-background shadow-sm"
-              : "text-muted-foreground"
+            activeTab === 'settings' ? 'bg-background shadow-sm' : 'text-muted-foreground'
           }`}
         >
           <Settings size={15} />
@@ -468,11 +448,9 @@ export default function ArticleEditor({
 
         <button
           type="button"
-          onClick={() => setActiveTab("preview")}
+          onClick={() => setActiveTab('preview')}
           className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm ${
-            activeTab === "preview"
-              ? "bg-background shadow-sm"
-              : "text-muted-foreground"
+            activeTab === 'preview' ? 'bg-background shadow-sm' : 'text-muted-foreground'
           }`}
         >
           <Eye size={15} />
@@ -481,7 +459,7 @@ export default function ArticleEditor({
       </div>
 
       {/* WRITE */}
-      {activeTab === "write" && (
+      {activeTab === 'write' && (
         <div className="rounded-2xl border border-border bg-card p-5 shadow-sm md:p-7">
           <input
             value={form.title}
@@ -512,7 +490,7 @@ export default function ArticleEditor({
 
             {editor && (
               <div className="mt-2 text-right text-xs text-muted-foreground">
-                {editor.storage.characterCount?.characters?.() || ""}
+                {editor.storage.characterCount?.characters?.() || ''}
               </div>
             )}
           </div>
@@ -520,26 +498,20 @@ export default function ArticleEditor({
       )}
 
       {/* SETTINGS */}
-      {activeTab === "settings" && (
+      {activeTab === 'settings' && (
         <div className="rounded-2xl border border-border bg-card p-6">
           <div className="grid gap-6 md:grid-cols-2">
             {/* Cover image */}
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium">
-                Cover Image
-              </label>
+              <label className="mb-2 block text-sm font-medium">Cover Image</label>
 
               <label className="flex cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-border p-8 transition hover:border-primary/50 hover:bg-muted/30">
                 <div className="text-center">
                   <ImageIcon className="mx-auto mb-3" size={28} />
 
-                  <p className="text-sm font-medium">
-                    Choose image from your device
-                  </p>
+                  <p className="text-sm font-medium">Choose image from your device</p>
 
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    PNG, JPG, JPEG, WEBP
-                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">PNG, JPG, JPEG, WEBP</p>
                 </div>
 
                 <input
@@ -582,7 +554,7 @@ export default function ArticleEditor({
               <label className="mb-2 block text-sm font-medium">Tags</label>
 
               <input
-                value={form.tags.join(", ")}
+                value={form.tags.join(', ')}
                 onChange={(e) => handleTags(e.target.value)}
                 placeholder="verilog, fpga, embedded, beginners"
                 className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary"
@@ -593,7 +565,7 @@ export default function ArticleEditor({
       )}
 
       {/* PREVIEW */}
-      {activeTab === "preview" && (
+      {activeTab === 'preview' && (
         <article className="rounded-2xl border border-border bg-card p-6 md:p-10">
           {form.coverImageUrl && (
             <img
@@ -603,15 +575,9 @@ export default function ArticleEditor({
             />
           )}
 
-          <h1 className="text-4xl font-bold">
-            {form.title || "Untitled Article"}
-          </h1>
+          <h1 className="text-4xl font-bold">{form.title || 'Untitled Article'}</h1>
 
-          {form.subtitle && (
-            <p className="mt-3 text-xl text-muted-foreground">
-              {form.subtitle}
-            </p>
-          )}
+          {form.subtitle && <p className="mt-3 text-xl text-muted-foreground">{form.subtitle}</p>}
 
           <div className="mt-8">
             <ArticleContent content={form.content} />

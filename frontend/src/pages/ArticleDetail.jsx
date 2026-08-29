@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import { fetchArticleBySlug } from "../api/articles";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import { fetchArticleBySlug } from '../api/articles';
 
 export default function ArticleDetail() {
   const { slug } = useParams();

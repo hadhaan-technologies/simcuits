@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { fetchArticles } from "../api/articles";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { fetchArticles } from '../api/articles';
 
 export default function Articles() {
   const [articles, setArticles] = useState([]);

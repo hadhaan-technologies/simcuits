@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useContext, useEffect, useState, createContext } from "react";
+import axios from 'axios';
+import { useContext, useEffect, useState, createContext } from 'react';
 
 const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("/api/auth/refresh", {
+        const res = await axios.get('/api/auth/refresh', {
           withCredentials: true,
         });
 
@@ -21,11 +21,11 @@ export const AuthProvider = ({ children }) => {
         };
 
         // Store access token so other API clients can use it
-        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem('accessToken', res.data.accessToken);
 
         setAuth(authData);
       } catch (error) {
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem('accessToken');
         setAuth(null);
       } finally {
         setLoading(false);
@@ -35,11 +35,7 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  return (
-    <AuthContext.Provider value={{ auth, setAuth, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ auth, setAuth, loading }}>{children}</AuthContext.Provider>;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components

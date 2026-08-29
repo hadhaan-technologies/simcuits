@@ -1,143 +1,134 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import {
-  Search,
-  Filter,
-  CheckCircle2,
-  Circle,
-  Clock,
-  Plus,
-  Pencil,
-  Trash2,
-} from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Search, Filter, CheckCircle2, Circle, Clock, Plus, Pencil, Trash2 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const categories = [
-  "All",
-  "GPIO",
-  "UART",
-  "PWM",
-  "Digital Logic",
-  "Timers",
-  "Interrupts",
-  "ADC",
-  "Protocols",
+  'All',
+  'GPIO',
+  'UART',
+  'PWM',
+  'Digital Logic',
+  'Timers',
+  'Interrupts',
+  'ADC',
+  'Protocols',
 ];
 
 // Temporary dummy problems.
 // These will be used only when the API returns no problems.
 const dummyProblems = [
   {
-    _id: "dummy-001",
-    title: "Blink LED at 2 Hz",
-    category: "GPIO",
-    difficulty: "easy",
-    estimatedTime: "5 min",
-    status: "done",
+    _id: 'dummy-001',
+    title: 'Blink LED at 2 Hz',
+    category: 'GPIO',
+    difficulty: 'easy',
+    estimatedTime: '5 min',
+    status: 'done',
   },
   {
-    _id: "dummy-002",
-    title: "Debounce Mechanical Switch",
-    category: "GPIO",
-    difficulty: "easy",
-    estimatedTime: "10 min",
-    status: "done",
+    _id: 'dummy-002',
+    title: 'Debounce Mechanical Switch',
+    category: 'GPIO',
+    difficulty: 'easy',
+    estimatedTime: '10 min',
+    status: 'done',
   },
   {
-    _id: "dummy-003",
-    title: "PWM Dimmer — 1 kHz, 60% Duty",
-    category: "PWM",
-    difficulty: "easy",
-    estimatedTime: "8 min",
-    status: "done",
+    _id: 'dummy-003',
+    title: 'PWM Dimmer — 1 kHz, 60% Duty',
+    category: 'PWM',
+    difficulty: 'easy',
+    estimatedTime: '8 min',
+    status: 'done',
   },
   {
-    _id: "dummy-004",
-    title: "UART Echo @ 115200 8N1",
-    category: "UART",
-    difficulty: "medium",
-    estimatedTime: "20 min",
-    status: "attempt",
+    _id: 'dummy-004',
+    title: 'UART Echo @ 115200 8N1',
+    category: 'UART',
+    difficulty: 'medium',
+    estimatedTime: '20 min',
+    status: 'attempt',
   },
   {
-    _id: "dummy-005",
-    title: "ADC Moving Average Filter",
-    category: "ADC",
-    difficulty: "medium",
-    estimatedTime: "18 min",
-    status: "done",
+    _id: 'dummy-005',
+    title: 'ADC Moving Average Filter',
+    category: 'ADC',
+    difficulty: 'medium',
+    estimatedTime: '18 min',
+    status: 'done',
   },
   {
-    _id: "dummy-006",
-    title: "ISR-Driven Millisecond Timer",
-    category: "Interrupts",
-    difficulty: "medium",
-    estimatedTime: "25 min",
-    status: "todo",
+    _id: 'dummy-006',
+    title: 'ISR-Driven Millisecond Timer',
+    category: 'Interrupts',
+    difficulty: 'medium',
+    estimatedTime: '25 min',
+    status: 'todo',
   },
   {
-    _id: "dummy-007",
-    title: "I²C EEPROM Page Write",
-    category: "Protocols",
-    difficulty: "hard",
-    estimatedTime: "40 min",
-    status: "todo",
+    _id: 'dummy-007',
+    title: 'I²C EEPROM Page Write',
+    category: 'Protocols',
+    difficulty: 'hard',
+    estimatedTime: '40 min',
+    status: 'todo',
   },
   {
-    _id: "dummy-008",
-    title: "SPI Master Full-Duplex",
-    category: "Protocols",
-    difficulty: "medium",
-    estimatedTime: "30 min",
-    status: "todo",
+    _id: 'dummy-008',
+    title: 'SPI Master Full-Duplex',
+    category: 'Protocols',
+    difficulty: 'medium',
+    estimatedTime: '30 min',
+    status: 'todo',
   },
   {
-    _id: "dummy-009",
-    title: "Quadrature Encoder Decode",
-    category: "Digital Logic",
-    difficulty: "hard",
-    estimatedTime: "45 min",
-    status: "todo",
+    _id: 'dummy-009',
+    title: 'Quadrature Encoder Decode',
+    category: 'Digital Logic',
+    difficulty: 'hard',
+    estimatedTime: '45 min',
+    status: 'todo',
   },
   {
-    _id: "dummy-010",
-    title: "Timer Input Capture Period",
-    category: "Timers",
-    difficulty: "medium",
-    estimatedTime: "22 min",
-    status: "attempt",
+    _id: 'dummy-010',
+    title: 'Timer Input Capture Period',
+    category: 'Timers',
+    difficulty: 'medium',
+    estimatedTime: '22 min',
+    status: 'attempt',
   },
   {
-    _id: "dummy-011",
-    title: "GPIO Toggle at 1 MHz",
-    category: "GPIO",
-    difficulty: "hard",
-    estimatedTime: "35 min",
-    status: "todo",
+    _id: 'dummy-011',
+    title: 'GPIO Toggle at 1 MHz',
+    category: 'GPIO',
+    difficulty: 'hard',
+    estimatedTime: '35 min',
+    status: 'todo',
   },
   {
-    _id: "dummy-012",
-    title: "Software UART Bit-Bang",
-    category: "UART",
-    difficulty: "hard",
-    estimatedTime: "50 min",
-    status: "todo",
+    _id: 'dummy-012',
+    title: 'Software UART Bit-Bang',
+    category: 'UART',
+    difficulty: 'hard',
+    estimatedTime: '50 min',
+    status: 'todo',
   },
 ];
 
 const difficultyStyles = {
-  easy: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
-  medium: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
-  hard: "text-red-400 bg-red-400/10 border-red-400/20",
+  easy: 'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
+  medium: 'text-yellow-400 bg-yellow-400/10 border-yellow-400/20',
+  hard: 'text-red-400 bg-red-400/10 border-red-400/20',
 };
 
 function StatusIcon({ status }) {
-  if (status === "done") {
+  if (status === 'done') {
     return <CheckCircle2 className="h-4 w-4 text-emerald-400" />;
   }
 
-  if (status === "attempt") {
+  if (status === 'attempt') {
     return <Clock className="h-4 w-4 text-yellow-400" />;
   }
 
@@ -151,7 +142,7 @@ function Waveform() {
         <div
           key={index}
           className={`w-[3px] bg-primary rounded-full ${
-            index % 4 === 0 ? "h-5" : index % 3 === 0 ? "h-3" : "h-2"
+            index % 4 === 0 ? 'h-5' : index % 3 === 0 ? 'h-3' : 'h-2'
           }`}
         />
       ))}
@@ -163,21 +154,21 @@ function Problems() {
   const { auth } = useAuth();
 
   const [problems, setProblems] = useState([]);
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [search, setSearch] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
   const [loading, setLoading] = useState(true);
 
   const user = auth?.user || auth;
   const role = user?.role;
 
-  const canCreate = role === "admin" || role === "author";
+  const canCreate = role === 'admin' || role === 'author';
 
   const canEdit = (problem) => {
-    if (problem._id?.startsWith("dummy-")) return false;
+    if (problem._id?.startsWith('dummy-')) return false;
 
-    if (role === "admin") return true;
+    if (role === 'admin') return true;
 
-    if (role === "author") {
+    if (role === 'author') {
       return (
         problem.author?._id === user?.id ||
         problem.author === user?.id ||
@@ -190,11 +181,11 @@ function Problems() {
   };
 
   const canDelete = (problem) => {
-    if (problem._id?.startsWith("dummy-")) return false;
+    if (problem._id?.startsWith('dummy-')) return false;
 
-    if (role === "admin") return true;
+    if (role === 'admin') return true;
 
-    if (role === "author") {
+    if (role === 'author') {
       return (
         problem.author?._id === user?.id ||
         problem.author === user?.id ||
@@ -212,27 +203,22 @@ function Problems() {
 
       const token = auth?.accessToken;
 
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/problems`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          withCredentials: true,
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/problems`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+        withCredentials: true,
+      });
 
-      console.log("Problems API response:", response.data);
+      console.log('Problems API response:', response.data);
 
-      const apiProblems = Array.isArray(response.data?.problems)
-        ? response.data.problems
-        : [];
+      const apiProblems = Array.isArray(response.data?.problems) ? response.data.problems : [];
 
       // Use real problems if they exist.
       // Otherwise show dummy problems temporarily.
       setProblems(apiProblems.length > 0 ? apiProblems : dummyProblems);
     } catch (error) {
-      console.error("Failed to fetch problems:", error);
+      console.error('Failed to fetch problems:', error);
 
       // Even if backend is unavailable,
       // keep the UI usable with dummy data.
@@ -252,38 +238,28 @@ function Problems() {
   }, [auth?.accessToken]);
 
   const handleDelete = async (problemId) => {
-    if (problemId.startsWith("dummy-")) {
-      alert("This is a demo problem and cannot be deleted.");
+    if (problemId.startsWith('dummy-')) {
+      alert('This is a demo problem and cannot be deleted.');
       return;
     }
 
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this problem?",
-    );
+    const confirmed = window.confirm('Are you sure you want to delete this problem?');
 
     if (!confirmed) return;
 
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/api/problems/${problemId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth?.accessToken}`,
-          },
-          withCredentials: true,
+      await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/problems/${problemId}`, {
+        headers: {
+          Authorization: `Bearer ${auth?.accessToken}`,
         },
-      );
+        withCredentials: true,
+      });
 
-      setProblems((current) =>
-        current.filter((problem) => problem._id !== problemId),
-      );
+      setProblems((current) => current.filter((problem) => problem._id !== problemId));
     } catch (error) {
-      console.error("Failed to delete problem:", error);
+      console.error('Failed to delete problem:', error);
 
-      alert(
-        error.response?.data?.message ||
-          "You are not allowed to delete this problem.",
-      );
+      alert(error.response?.data?.message || 'You are not allowed to delete this problem.');
     }
   };
 
@@ -296,7 +272,7 @@ function Problems() {
       problem.tags?.some((tag) => tag.toLowerCase().includes(searchTerm));
 
     const matchesCategory =
-      activeCategory === "All" ||
+      activeCategory === 'All' ||
       problem.category === activeCategory ||
       problem.tags?.includes(activeCategory);
 
@@ -363,8 +339,8 @@ function Problems() {
                 onClick={() => setActiveCategory(category)}
                 className={`px-3 py-1.5 rounded-full text-xs border transition ${
                   active
-                    ? "bg-primary/15 border-primary/40 text-foreground"
-                    : "border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20"
+                    ? 'bg-primary/15 border-primary/40 text-foreground'
+                    : 'border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20'
                 }`}
               >
                 {category}
@@ -395,9 +371,7 @@ function Problems() {
 
           {/* EMPTY */}
           {!loading && filteredProblems.length === 0 && (
-            <div className="p-10 text-center text-sm text-muted-foreground">
-              No problems found.
-            </div>
+            <div className="p-10 text-center text-sm text-muted-foreground">No problems found.</div>
           )}
 
           {/* PROBLEM ROWS */}
@@ -412,18 +386,14 @@ function Problems() {
                   <StatusIcon status={problem.status} />
 
                   <span className="font-mono text-xs text-muted-foreground">
-                    {String(index + 1).padStart(3, "0")}
+                    {String(index + 1).padStart(3, '0')}
                   </span>
                 </div>
 
                 {/* TITLE */}
                 <div className="md:col-span-4 mt-2 md:mt-0">
                   <Link
-                    to={
-                      problem._id?.startsWith("dummy-")
-                        ? "/editor"
-                        : `/problems/${problem._id}`
-                    }
+                    to={problem._id?.startsWith('dummy-') ? '/editor' : `/problems/${problem._id}`}
                     className="text-sm font-medium group-hover:text-primary transition"
                   >
                     {problem.title}
@@ -447,13 +417,12 @@ function Problems() {
                   <span
                     className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                       difficultyStyles[problem.difficulty?.toLowerCase()] ||
-                      "text-muted-foreground border-white/10"
+                      'text-muted-foreground border-white/10'
                     }`}
                   >
                     {problem.difficulty
-                      ? problem.difficulty.charAt(0).toUpperCase() +
-                        problem.difficulty.slice(1)
-                      : "—"}
+                      ? problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)
+                      : '—'}
                   </span>
                 </div>
 
@@ -464,7 +433,7 @@ function Problems() {
 
                 {/* ESTIMATE */}
                 <div className="hidden md:block md:col-span-1 text-xs text-muted-foreground font-mono">
-                  {problem.estimatedTime || "—"}
+                  {problem.estimatedTime || '—'}
                 </div>
 
                 {/* ACTIONS */}

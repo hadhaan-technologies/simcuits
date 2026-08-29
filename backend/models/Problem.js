@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const problemSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const problemSchema = new mongoose.Schema(
     },
     difficulty: {
       type: String,
-      enum: ["easy", "medium", "hard"],
+      enum: ['easy', 'medium', 'hard'],
       required: true,
     },
     xpReward: {
@@ -40,7 +40,7 @@ const problemSchema = new mongoose.Schema(
     },
     starterCode: {
       type: String, // Verilog boilerplate shown in the editor
-      default: "",
+      default: '',
     },
     testCases: [
       {
@@ -51,13 +51,13 @@ const problemSchema = new mongoose.Schema(
     ],
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     status: {
       type: String,
-      enum: ["draft", "published"],
-      default: "draft",
+      enum: ['draft', 'published'],
+      default: 'draft',
     },
     solvedCount: {
       type: Number,
@@ -68,18 +68,17 @@ const problemSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 problemSchema.index({ status: 1, difficulty: 1 });
 problemSchema.index({ tags: 1 });
 
 // keep acceptance rate easy to read without storing it separately (always in sync)
-problemSchema.virtual("acceptanceRate").get(function () {
+problemSchema.virtual('acceptanceRate').get(function () {
   if (!this.submissionCount) return 0;
   return Math.round((this.solvedCount / this.submissionCount) * 100);
 });
-problemSchema.set("toJSON", { virtuals: true });
+problemSchema.set('toJSON', { virtuals: true });
 
-export default mongoose.models.Problem ||
-  mongoose.model("Problem", problemSchema);
+export default mongoose.models.Problem || mongoose.model('Problem', problemSchema);

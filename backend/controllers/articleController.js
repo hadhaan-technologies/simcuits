@@ -1,5 +1,5 @@
-import Article from "../models/Article.js";
-import User from "../models/User.js";
+import Article from '../models/Article.js';
+import User from '../models/User.js';
 
 // GET /api/articles?page=1&limit=10&tag=verilog
 export async function getArticles(req, res) {
@@ -10,7 +10,7 @@ export async function getArticles(req, res) {
     const { tag } = req.query;
 
     const query = {
-      status: "published",
+      status: 'published',
     };
 
     if (tag) {
@@ -18,11 +18,11 @@ export async function getArticles(req, res) {
     }
 
     const articles = await Article.find(query)
-      .populate("author", "username")
+      .populate('author', 'username')
       .sort({ publishedAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
-      .select("-content");
+      .select('-content');
 
     const total = await Article.countDocuments(query);
 
@@ -33,10 +33,10 @@ export async function getArticles(req, res) {
       totalPages: Math.ceil(total / limit),
     });
   } catch (error) {
-    console.error("GET ARTICLES ERROR:", error);
+    console.error('GET ARTICLES ERROR:', error);
 
     res.status(500).json({
-      error: "Failed to fetch articles",
+      error: 'Failed to fetch articles',
     });
   }
 }
@@ -44,13 +44,13 @@ export async function getArticles(req, res) {
 // GET /api/articles/:slug
 export async function getArticleBySlug(req, res) {
   const article = await Article.findOneAndUpdate(
-    { slug: req.params.slug, status: "published" },
+    { slug: req.params.slug, status: 'published' },
     { $inc: { views: 1 } },
-    { new: true },
-  ).populate("author", "username");
+    { new: true }
+  ).populate('author', 'username');
 
   if (!article) {
-    return res.status(404).json({ error: "Article not found" });
+    return res.status(404).json({ error: 'Article not found' });
   }
 
   res.json({ article });
@@ -60,25 +60,25 @@ export async function getArticleBySlug(req, res) {
 export async function createArticle(req, res) {
   const { title, subtitle, excerpt, content, tags, status } = req.body;
 
-  const coverImage = req.file ? `/uploads/articles/${req.file.filename}` : "";
+  const coverImage = req.file ? `/uploads/articles/${req.file.filename}` : '';
 
   if (!title || !excerpt || !content) {
     return res.status(400).json({
-      error: "Missing required fields",
+      error: 'Missing required fields',
     });
   }
 
   const slug = title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-');
 
   const existing = await Article.findOne({ slug });
 
   if (existing) {
     return res.status(409).json({
-      error: "An article with a similar title already exists",
+      error: 'An article with a similar title already exists',
     });
   }
 
@@ -88,14 +88,14 @@ export async function createArticle(req, res) {
     slug,
     excerpt,
     content,
-    tags: tags ? tags.split(",").map((tag) => tag.trim()) : [],
+    tags: tags ? tags.split(',').map((tag) => tag.trim()) : [],
     coverImage,
     author: req.user.id,
-    status: status === "published" ? "published" : "draft",
-    publishedAt: status === "published" ? new Date() : undefined,
+    status: status === 'published' ? 'published' : 'draft',
+    publishedAt: status === 'published' ? new Date() : undefined,
   });
 
-  if (article.status === "published") {
+  if (article.status === 'published') {
     await User.findByIdAndUpdate(req.user.id, {
       $inc: { articlesPublished: 1 },
     });
@@ -110,39 +110,39 @@ export async function updateArticle(req, res) {
 
     if (!article) {
       return res.status(404).json({
-        error: "Article not found",
+        error: 'Article not found',
       });
     }
 
     // Only the article author or admin can edit
-    if (String(article.author) !== req.user.id && req.user.role !== "admin") {
+    if (String(article.author) !== req.user.id && req.user.role !== 'admin') {
       return res.status(403).json({
-        error: "Unauthorized",
+        error: 'Unauthorized',
       });
     }
 
-    const wasPublished = article.status === "published";
+    const wasPublished = article.status === 'published';
 
     Object.assign(article, req.body);
 
     // Set publication date when publishing
-    if (req.body.status === "published" && !wasPublished) {
+    if (req.body.status === 'published' && !wasPublished) {
       article.publishedAt = new Date();
     }
 
     // Clear publication date when moved back to draft
-    if (req.body.status === "draft") {
+    if (req.body.status === 'draft') {
       article.publishedAt = undefined;
     }
 
     await article.save();
 
     // Update author's published article count
-    if (!wasPublished && article.status === "published") {
+    if (!wasPublished && article.status === 'published') {
       await User.findByIdAndUpdate(article.author, {
         $inc: { articlesPublished: 1 },
       });
-    } else if (wasPublished && article.status === "draft") {
+    } else if (wasPublished && article.status === 'draft') {
       await User.findByIdAndUpdate(article.author, {
         $inc: { articlesPublished: -1 },
       });
@@ -152,10 +152,10 @@ export async function updateArticle(req, res) {
       article,
     });
   } catch (error) {
-    console.error("UPDATE ARTICLE ERROR:", error);
+    console.error('UPDATE ARTICLE ERROR:', error);
 
     return res.status(500).json({
-      error: "Failed to update article",
+      error: 'Failed to update article',
     });
   }
 }
@@ -164,22 +164,20 @@ export async function uploadArticleImage(req, res) {
   try {
     if (!req.file) {
       return res.status(400).json({
-        error: "No image uploaded",
+        error: 'No image uploaded',
       });
     }
 
-    const imageUrl = `${req.protocol}://${req.get(
-      "host",
-    )}/uploads/articles/${req.file.filename}`;
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/articles/${req.file.filename}`;
 
     res.status(201).json({
       imageUrl,
     });
   } catch (error) {
-    console.error("UPLOAD ARTICLE IMAGE ERROR:", error);
+    console.error('UPLOAD ARTICLE IMAGE ERROR:', error);
 
     res.status(500).json({
-      error: "Failed to upload image",
+      error: 'Failed to upload image',
     });
   }
 }
@@ -188,14 +186,14 @@ export async function uploadArticleImage(req, res) {
 export async function deleteArticle(req, res) {
   const article = await Article.findById(req.params.id);
   if (!article) {
-    return res.status(404).json({ error: "Article not found" });
+    return res.status(404).json({ error: 'Article not found' });
   }
 
-  if (String(article.author) !== req.user.id && req.user.role !== "admin") {
-    return res.status(403).json({ error: "Unauthorized" });
+  if (String(article.author) !== req.user.id && req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Unauthorized' });
   }
 
-  if (article.status === "published") {
+  if (article.status === 'published') {
     await User.findByIdAndUpdate(article.author, {
       $inc: { articlesPublished: -1 },
     });
@@ -203,7 +201,7 @@ export async function deleteArticle(req, res) {
 
   await article.deleteOne();
 
-  res.json({ message: "Article deleted" });
+  res.json({ message: 'Article deleted' });
 }
 
 // GET /api/articles/mine — logged-in author's own articles (draft + published)

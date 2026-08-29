@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {
   CircuitBoardIcon,
   RadicalIcon,
@@ -13,87 +13,87 @@ import {
   Cpu,
   SparkleIcon,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
 const categories = [
-  { name: "GPIO", icon: CircuitBoardIcon, count: 42 },
-  { name: "UART", icon: RadicalIcon, count: 28 },
-  { name: "PWM", icon: ActivityIcon, count: 31 },
-  { name: "Digital Logic", icon: BinaryIcon, count: 56 },
-  { name: "Timers", icon: TimerIcon, count: 24 },
-  { name: "Interrupts", icon: BellIcon, count: 19 },
-  { name: "ADC", icon: GaugeCircleIcon, count: 22 },
-  { name: "Protocols", icon: ZapIcon, count: 35 },
+  { name: 'GPIO', icon: CircuitBoardIcon, count: 42 },
+  { name: 'UART', icon: RadicalIcon, count: 28 },
+  { name: 'PWM', icon: ActivityIcon, count: 31 },
+  { name: 'Digital Logic', icon: BinaryIcon, count: 56 },
+  { name: 'Timers', icon: TimerIcon, count: 24 },
+  { name: 'Interrupts', icon: BellIcon, count: 19 },
+  { name: 'ADC', icon: GaugeCircleIcon, count: 22 },
+  { name: 'Protocols', icon: ZapIcon, count: 35 },
 ];
 
 const features = [
   {
     icon: Terminal,
-    title: "In-browser firmware editor",
-    desc: "Write Embedded C / C++ with real syntax intelligence and instant feedback.",
+    title: 'In-browser firmware editor',
+    desc: 'Write Embedded C / C++ with real syntax intelligence and instant feedback.',
   },
   {
     icon: ActivityIcon,
-    title: "Cycle-accurate simulation",
-    desc: "Validate code against deterministic, hardware-accurate signal models.",
+    title: 'Cycle-accurate simulation',
+    desc: 'Validate code against deterministic, hardware-accurate signal models.',
   },
   {
     icon: ShieldCheck,
-    title: "Waveform-based grading",
-    desc: "Pass means your output waveform matches spec — timing, edges, levels.",
+    title: 'Waveform-based grading',
+    desc: 'Pass means your output waveform matches spec — timing, edges, levels.',
   },
   {
     icon: Cpu,
-    title: "MCU peripheral models",
-    desc: "GPIO, timers, ADC, UART, SPI, I²C — modeled at register level.",
+    title: 'MCU peripheral models',
+    desc: 'GPIO, timers, ADC, UART, SPI, I²C — modeled at register level.',
   },
   {
     icon: SparkleIcon,
-    title: "Curated problem sets",
-    desc: "From blinking LEDs to UART bootloaders. Designed by industry engineers.",
+    title: 'Curated problem sets',
+    desc: 'From blinking LEDs to UART bootloaders. Designed by industry engineers.',
   },
   {
     icon: Zap,
-    title: "Instant test runs",
-    desc: "Run, inspect, iterate. Sub-second feedback loop on every keystroke.",
+    title: 'Instant test runs',
+    desc: 'Run, inspect, iterate. Sub-second feedback loop on every keystroke.',
   },
 ];
 
 const workflow = [
   {
-    number: "01",
-    title: "Pick a problem",
-    description: "Filter by peripheral, difficulty, or company.",
+    number: '01',
+    title: 'Pick a problem',
+    description: 'Filter by peripheral, difficulty, or company.',
   },
   {
-    number: "02",
-    title: "Write the firmware",
-    description: "Edit C/C++ with peripheral-aware autocomplete.",
+    number: '02',
+    title: 'Write the firmware',
+    description: 'Edit C/C++ with peripheral-aware autocomplete.',
   },
   {
-    number: "03",
-    title: "Run on simulator",
-    description: "Cycle-accurate execution on virtual MCU.",
+    number: '03',
+    title: 'Run on simulator',
+    description: 'Cycle-accurate execution on virtual MCU.',
   },
   {
-    number: "04",
-    title: "Validate waveform",
-    description: "Tests fail-fast on timing or level mismatch.",
+    number: '04',
+    title: 'Validate waveform',
+    description: 'Tests fail-fast on timing or level mismatch.',
   },
 ];
 
 const testimonials = [
   {
     quote:
-      "As an engineering student, I’ve often felt that learning core engineering concepts is one thing, but having a structured way to practice and validate what you know is another. Simcuit feels like it’s finally bridging that gap.",
-    author: "Shakthi Pooja",
-    role: "II Year, Panimalar Engineering College",
+      'As an engineering student, I’ve often felt that learning core engineering concepts is one thing, but having a structured way to practice and validate what you know is another. Simcuit feels like it’s finally bridging that gap.',
+    author: 'Shakthi Pooja',
+    role: 'II Year, Panimalar Engineering College',
   },
   {
     quote:
-      "I develop AI-driven solutions and solving real-world technical challenges. Building scalable AI applications has strengthened my expertise in Python, LLMs, RAG, APIs, SQL, and problem-solving while encouraging continuous learning and innovation.",
-    author: "Akshadha",
-    role: "AI Engineer, IntSphere",
+      'I develop AI-driven solutions and solving real-world technical challenges. Building scalable AI applications has strengthened my expertise in Python, LLMs, RAG, APIs, SQL, and problem-solving while encouraging continuous learning and innovation.',
+    author: 'Akshadha',
+    role: 'AI Engineer, IntSphere',
   },
 ];
 
@@ -111,14 +111,12 @@ function Home() {
           <h1 className="mt-6 text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05]">
             Master embedded systems
             <br />
-            through{" "}
-            <span className="text-primary">interactive hardware logic</span>
+            through <span className="text-primary">interactive hardware logic</span>
           </h1>
 
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Solve real engineering problems on simulated hardware. Write
-            firmware, run it, and validate against expected waveforms — all in
-            your browser.
+            Solve real engineering problems on simulated hardware. Write firmware, run it, and
+            validate against expected waveforms — all in your browser.
           </p>
 
           <div className="mt-9 flex items-center justify-center gap-3">
@@ -158,14 +156,12 @@ function Home() {
               <div className="grid md:grid-cols-2">
                 {/* CODE */}
                 <div className="p-5 font-mono text-[12.5px] leading-relaxed bg-background/40 border-r border-white/5 text-left">
-                  <div className="text-muted-foreground">
-                    // Generate 1kHz PWM @ 60% duty
-                  </div>
+                  <div className="text-muted-foreground">// Generate 1kHz PWM @ 60% duty</div>
 
                   <div>
-                    <span className="text-violet">void</span>{" "}
+                    <span className="text-violet">void</span>{' '}
                     <span className="text-cyan">setup_pwm</span>
-                    () {"{"}
+                    () {'{'}
                   </div>
 
                   <div className="pl-4">
@@ -182,11 +178,9 @@ function Home() {
 
                   <div className="pl-4">TIM2-&gt;CR1 |= TIM_CR1_CEN;</div>
 
-                  <div>{"}"}</div>
+                  <div>{'}'}</div>
 
-                  <div className="mt-3 text-emerald">
-                    ✓ 4 / 4 test cases passed
-                  </div>
+                  <div className="mt-3 text-emerald">✓ 4 / 4 test cases passed</div>
                 </div>
               </div>
             </div>
@@ -198,15 +192,7 @@ function Home() {
           </div>
 
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-muted-foreground/70 font-mono text-sm">
-            {[
-              "NVIDIA",
-              "ARM",
-              "Intel",
-              "Apple",
-              "Tesla",
-              "SpaceX",
-              "Qualcomm",
-            ].map((name) => (
+            {['NVIDIA', 'ARM', 'Intel', 'Apple', 'Tesla', 'SpaceX', 'Qualcomm'].map((name) => (
               <span key={name} className="hover:text-foreground transition">
                 {name}
               </span>
@@ -227,8 +213,8 @@ function Home() {
           </h2>
 
           <p className="mt-3 text-muted-foreground">
-            VSCode-grade editor. Logic-analyzer-grade visualization. CI-grade
-            test harness. Engineered for serious embedded work.
+            VSCode-grade editor. Logic-analyzer-grade visualization. CI-grade test harness.
+            Engineered for serious embedded work.
           </p>
         </div>
 
@@ -248,9 +234,7 @@ function Home() {
 
                 <div className="mt-4 font-medium">{feature.title}</div>
 
-                <div className="mt-1.5 text-sm text-muted-foreground">
-                  {feature.desc}
-                </div>
+                <div className="mt-1.5 text-sm text-muted-foreground">{feature.desc}</div>
               </div>
             );
           })}
@@ -261,9 +245,7 @@ function Home() {
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="flex items-end justify-between flex-wrap gap-4">
           <div>
-            <h2 className="text-4xl font-semibold tracking-tight">
-              Problem categories
-            </h2>
+            <h2 className="text-4xl font-semibold tracking-tight">Problem categories</h2>
 
             <p className="mt-2 text-muted-foreground">
               From bare-metal basics to advanced protocol stacks.
@@ -292,9 +274,7 @@ function Home() {
                     <Icon size={22} />
                   </span>
 
-                  <span className="text-xs font-mono text-muted-foreground">
-                    {category.count}
-                  </span>
+                  <span className="text-xs font-mono text-muted-foreground">{category.count}</span>
                 </div>
 
                 <div className="mt-6 font-medium">{category.name}</div>
@@ -324,15 +304,11 @@ function Home() {
               key={step.number}
               className="relative glass rounded-2xl p-6 border border-white/10"
             >
-              <div className="font-mono text-xs text-primary">
-                {step.number}
-              </div>
+              <div className="font-mono text-xs text-primary">{step.number}</div>
 
               <div className="mt-3 font-medium">{step.title}</div>
 
-              <div className="mt-1 text-sm text-muted-foreground">
-                {step.description}
-              </div>
+              <div className="mt-1 text-sm text-muted-foreground">{step.description}</div>
             </div>
           ))}
         </div>
@@ -346,23 +322,16 @@ function Home() {
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.author}
-              className="glass p-6 rounded-2xl border border-white/10"
-            >
+            <div key={testimonial.author} className="glass p-6 rounded-2xl border border-white/10">
               <div className="text-sm leading-relaxed text-foreground/90">
                 "{testimonial.quote}"
               </div>
 
               <div className="mt-5 flex items-center gap-3">
                 <div>
-                  <div className="text-sm font-medium">
-                    {testimonial.author}
-                  </div>
+                  <div className="text-sm font-medium">{testimonial.author}</div>
 
-                  <div className="text-xs text-muted-foreground">
-                    {testimonial.role}
-                  </div>
+                  <div className="text-xs text-muted-foreground">{testimonial.role}</div>
                 </div>
               </div>
             </div>

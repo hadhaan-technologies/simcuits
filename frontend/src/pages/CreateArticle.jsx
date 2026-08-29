@@ -1,13 +1,13 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, useEditor } from '@tiptap/react';
 
-import StarterKit from "@tiptap/starter-kit";
-import Image from "@tiptap/extension-image";
-import Link from "@tiptap/extension-link";
-import Underline from "@tiptap/extension-underline";
-import TextAlign from "@tiptap/extension-text-align";
-import Placeholder from "@tiptap/extension-placeholder";
+import StarterKit from '@tiptap/starter-kit';
+import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Placeholder from '@tiptap/extension-placeholder';
 
 import {
   AlignCenter,
@@ -27,11 +27,11 @@ import {
   Pilcrow,
   Quote,
   Underline as UnderlineIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import { createArticle } from "../api/articles";
+import { createArticle } from '../api/articles';
 
 /* -------------------------------------------------------
    TipTap extensions
@@ -45,10 +45,10 @@ const extensions = [
     openOnClick: false,
   }),
   TextAlign.configure({
-    types: ["heading", "paragraph"],
+    types: ['heading', 'paragraph'],
   }),
   Placeholder.configure({
-    placeholder: "Start writing your article...",
+    placeholder: 'Start writing your article...',
   }),
 ];
 
@@ -67,8 +67,8 @@ function ToolbarButton({ children, onClick, label, active = false }) {
       onClick={onClick}
       className={`grid h-8 w-8 place-items-center rounded-md border transition ${
         active
-          ? "border-primary bg-primary/10 text-primary"
-          : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+          ? 'border-primary bg-primary/10 text-primary'
+          : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground'
       }`}
     >
       {children}
@@ -80,14 +80,14 @@ function EditorToolbar({ editor }) {
   if (!editor) return null;
 
   const addLink = () => {
-    const previousUrl = editor.getAttributes("link").href;
+    const previousUrl = editor.getAttributes('link').href;
 
-    const url = window.prompt("Enter URL", previousUrl || "https://");
+    const url = window.prompt('Enter URL', previousUrl || 'https://');
 
     if (url === null) return;
 
-    if (url === "") {
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
 
       return;
     }
@@ -95,7 +95,7 @@ function EditorToolbar({ editor }) {
     editor
       .chain()
       .focus()
-      .extendMarkRange("link")
+      .extendMarkRange('link')
       .setLink({
         href: url,
       })
@@ -103,7 +103,7 @@ function EditorToolbar({ editor }) {
   };
 
   const addImage = () => {
-    const url = window.prompt("Enter image URL", "https://");
+    const url = window.prompt('Enter image URL', 'https://');
 
     if (!url) return;
 
@@ -122,7 +122,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Paragraph"
-        active={editor.isActive("paragraph")}
+        active={editor.isActive('paragraph')}
         onClick={() => editor.chain().focus().setParagraph().run()}
       >
         <Pilcrow className="h-4 w-4" />
@@ -132,7 +132,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 1"
-        active={editor.isActive("heading", { level: 1 })}
+        active={editor.isActive('heading', { level: 1 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
       >
         <Heading1 className="h-4 w-4" />
@@ -140,7 +140,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 2"
-        active={editor.isActive("heading", { level: 2 })}
+        active={editor.isActive('heading', { level: 2 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
       >
         <Heading2 className="h-4 w-4" />
@@ -148,7 +148,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Heading 3"
-        active={editor.isActive("heading", { level: 3 })}
+        active={editor.isActive('heading', { level: 3 })}
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
       >
         <Heading3 className="h-4 w-4" />
@@ -160,7 +160,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Bold"
-        active={editor.isActive("bold")}
+        active={editor.isActive('bold')}
         onClick={() => editor.chain().focus().toggleBold().run()}
       >
         <Bold className="h-4 w-4" />
@@ -168,7 +168,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Italic"
-        active={editor.isActive("italic")}
+        active={editor.isActive('italic')}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       >
         <Italic className="h-4 w-4" />
@@ -176,17 +176,13 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Underline"
-        active={editor.isActive("underline")}
+        active={editor.isActive('underline')}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
         <UnderlineIcon className="h-4 w-4" />
       </ToolbarButton>
 
-      <ToolbarButton
-        label="Insert link"
-        active={editor.isActive("link")}
-        onClick={addLink}
-      >
+      <ToolbarButton label="Insert link" active={editor.isActive('link')} onClick={addLink}>
         <Link2 className="h-4 w-4" />
       </ToolbarButton>
 
@@ -197,9 +193,9 @@ function EditorToolbar({ editor }) {
       <ToolbarButton
         label="Align left"
         active={editor.isActive({
-          textAlign: "left",
+          textAlign: 'left',
         })}
-        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        onClick={() => editor.chain().focus().setTextAlign('left').run()}
       >
         <AlignLeft className="h-4 w-4" />
       </ToolbarButton>
@@ -207,9 +203,9 @@ function EditorToolbar({ editor }) {
       <ToolbarButton
         label="Align center"
         active={editor.isActive({
-          textAlign: "center",
+          textAlign: 'center',
         })}
-        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        onClick={() => editor.chain().focus().setTextAlign('center').run()}
       >
         <AlignCenter className="h-4 w-4" />
       </ToolbarButton>
@@ -217,9 +213,9 @@ function EditorToolbar({ editor }) {
       <ToolbarButton
         label="Align right"
         active={editor.isActive({
-          textAlign: "right",
+          textAlign: 'right',
         })}
-        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        onClick={() => editor.chain().focus().setTextAlign('right').run()}
       >
         <AlignRight className="h-4 w-4" />
       </ToolbarButton>
@@ -230,7 +226,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Bullet list"
-        active={editor.isActive("bulletList")}
+        active={editor.isActive('bulletList')}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
         <List className="h-4 w-4" />
@@ -238,7 +234,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Numbered list"
-        active={editor.isActive("orderedList")}
+        active={editor.isActive('orderedList')}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered className="h-4 w-4" />
@@ -246,7 +242,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Quote"
-        active={editor.isActive("blockquote")}
+        active={editor.isActive('blockquote')}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
       >
         <Quote className="h-4 w-4" />
@@ -254,7 +250,7 @@ function EditorToolbar({ editor }) {
 
       <ToolbarButton
         label="Code block"
-        active={editor.isActive("codeBlock")}
+        active={editor.isActive('codeBlock')}
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
       >
         <Code2 className="h-4 w-4" />
@@ -285,15 +281,15 @@ export default function CreateArticle() {
   /* Article form */
 
   const [form, setForm] = useState({
-    title: "",
-    subtitle: "",
-    excerpt: "",
-    tags: "",
-    coverImage: "",
+    title: '',
+    subtitle: '',
+    excerpt: '',
+    tags: '',
+    coverImage: '',
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   /* -------------------------------------------------------
      TipTap editor
@@ -303,10 +299,10 @@ export default function CreateArticle() {
     extensions,
 
     content: {
-      type: "doc",
+      type: 'doc',
       content: [
         {
-          type: "paragraph",
+          type: 'paragraph',
         },
       ],
     },
@@ -316,7 +312,7 @@ export default function CreateArticle() {
     editorProps: {
       attributes: {
         class:
-          "prose-article min-h-[450px] w-full rounded-lg border border-border bg-background px-5 py-4 outline-none focus:border-primary/40",
+          'prose-article min-h-[450px] w-full rounded-lg border border-border bg-background px-5 py-4 outline-none focus:border-primary/40',
       },
     },
   });
@@ -358,20 +354,20 @@ export default function CreateArticle() {
 
   const resetForm = () => {
     setForm({
-      title: "",
-      subtitle: "",
-      excerpt: "",
-      tags: "",
-      coverImage: "",
+      title: '',
+      subtitle: '',
+      excerpt: '',
+      tags: '',
+      coverImage: '',
     });
 
     setCoverFile(null);
 
     editor?.commands.setContent({
-      type: "doc",
+      type: 'doc',
       content: [
         {
-          type: "paragraph",
+          type: 'paragraph',
           content: [],
         },
       ],
@@ -386,7 +382,7 @@ export default function CreateArticle() {
     if (!editor) return;
 
     setLoading(true);
-    setError("");
+    setError('');
 
     try {
       const contentJSON = editor.getJSON();
@@ -394,22 +390,22 @@ export default function CreateArticle() {
 
       const formData = new FormData();
 
-      formData.append("title", form.title);
-      formData.append("subtitle", form.subtitle);
-      formData.append("excerpt", form.excerpt);
-      formData.append("tags", form.tags);
-      formData.append("content", content);
-      formData.append("status", publishNow ? "published" : "draft");
+      formData.append('title', form.title);
+      formData.append('subtitle', form.subtitle);
+      formData.append('excerpt', form.excerpt);
+      formData.append('tags', form.tags);
+      formData.append('content', content);
+      formData.append('status', publishNow ? 'published' : 'draft');
 
       if (coverFile) {
-        formData.append("coverImage", coverFile);
+        formData.append('coverImage', coverFile);
       }
 
-      console.log("ARTICLE PAYLOAD:", Object.fromEntries(formData));
+      console.log('ARTICLE PAYLOAD:', Object.fromEntries(formData));
 
       const response = await createArticle(formData);
 
-      console.log("ARTICLE CREATED:", response);
+      console.log('ARTICLE CREATED:', response);
 
       /*
        * IMPORTANT:
@@ -425,33 +421,29 @@ export default function CreateArticle() {
        */
 
       if (publishNow) {
-        console.log("ARTICLE PUBLISHED SUCCESSFULLY");
+        console.log('ARTICLE PUBLISHED SUCCESSFULLY');
 
         /*
          * Go to Learn so you can immediately
          * see the published article.
          */
 
-        navigate("/learn");
+        navigate('/learn');
       } else {
-        console.log("DRAFT SAVED SUCCESSFULLY");
+        console.log('DRAFT SAVED SUCCESSFULLY');
 
-        navigate("/dashboard");
+        navigate('/dashboard');
       }
     } catch (err) {
-      console.error("CREATE ARTICLE ERROR:", err);
+      console.error('CREATE ARTICLE ERROR:', err);
 
-      console.error("STATUS:", err.response?.status);
+      console.error('STATUS:', err.response?.status);
 
-      console.error("RESPONSE:", err.response?.data);
+      console.error('RESPONSE:', err.response?.data);
 
-      console.error("REQUEST:", err.config);
+      console.error('REQUEST:', err.config);
 
-      setError(
-        err.response?.data?.error ||
-          err.response?.data?.message ||
-          "Something went wrong",
-      );
+      setError(err.response?.data?.error || err.response?.data?.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
@@ -519,9 +511,7 @@ export default function CreateArticle() {
 
           {editor && (
             <div className="mt-2 text-right text-xs text-muted-foreground">
-              {editor.storage.characterCount?.characters?.() ||
-                editor.getText().length}{" "}
-              characters
+              {editor.storage.characterCount?.characters?.() || editor.getText().length} characters
             </div>
           )}
         </div>
@@ -537,9 +527,7 @@ export default function CreateArticle() {
             {/* Cover image */}
 
             <div className="md:col-span-2">
-              <label className="mb-2 block text-sm font-medium">
-                Cover Image
-              </label>
+              <label className="mb-2 block text-sm font-medium">Cover Image</label>
 
               <input
                 ref={fileInputRef}
@@ -603,7 +591,7 @@ export default function CreateArticle() {
             onClick={() => handleSubmit(false)}
             className="rounded-lg border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted disabled:opacity-50"
           >
-            {loading ? "Saving..." : "Save Draft"}
+            {loading ? 'Saving...' : 'Save Draft'}
           </button>
 
           {/* Publish */}
@@ -614,7 +602,7 @@ export default function CreateArticle() {
             onClick={() => handleSubmit(true)}
             className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
           >
-            {loading ? "Publishing..." : "Publish"}
+            {loading ? 'Publishing...' : 'Publish'}
           </button>
         </div>
       </div>

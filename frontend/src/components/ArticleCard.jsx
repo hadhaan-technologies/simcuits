@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { Clock, Eye } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { Clock, Eye } from 'lucide-react';
 
 export default function ArticleCard({ article, featured = false }) {
   return (
@@ -8,11 +8,9 @@ export default function ArticleCard({ article, featured = false }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-card transition-all hover:-translate-y-1 hover:shadow-xl"
     >
       {article.coverImage && (
-        <div
-          className={featured ? "h-56 overflow-hidden" : "h-40 overflow-hidden"}
-        >
+        <div className={featured ? 'h-56 overflow-hidden' : 'h-40 overflow-hidden'}>
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL.replace("/api", "")}${article.coverImage}`}
+            src={`${import.meta.env.VITE_API_BASE_URL.replace('/api', '')}${article.coverImage}`}
             alt={article.title}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -26,10 +24,7 @@ export default function ArticleCard({ article, featured = false }) {
         {article.tags?.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {article.tags.slice(0, 2).map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-primary/10 px-2 py-1 text-xs text-primary"
-              >
+              <span key={tag} className="rounded-full bg-primary/10 px-2 py-1 text-xs text-primary">
                 {tag}
               </span>
             ))}
@@ -42,9 +37,7 @@ export default function ArticleCard({ article, featured = false }) {
         </h2>
 
         {/* Excerpt */}
-        <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">
-          {article.excerpt}
-        </p>
+        <p className="mt-2 line-clamp-3 flex-1 text-sm text-muted-foreground">{article.excerpt}</p>
 
         {/* Meta */}
         <div className="mt-5 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
@@ -58,9 +51,7 @@ export default function ArticleCard({ article, featured = false }) {
             {article.views || 0}
           </span>
 
-          {article.author?.username && (
-            <span className="ml-auto">{article.author.username}</span>
-          )}
+          {article.author?.username && <span className="ml-auto">{article.author.username}</span>}
         </div>
       </div>
     </Link>

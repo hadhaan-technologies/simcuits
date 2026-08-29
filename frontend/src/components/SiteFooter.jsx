@@ -1,33 +1,33 @@
-import logo from "../assets/simcuitLogo.ico";
-import { Link } from "react-router-dom";
+import logo from '../assets/simcuitLogo.ico';
+import { Link } from 'react-router-dom';
 
 export function SiteFooter() {
   const columns = [
     {
-      title: "Product",
+      title: 'Product',
       items: [
-        { label: "Problems", path: "/problems" },
-        { label: "Simulator", path: "/simulator" },
-        { label: "Dashboard", path: "/dashboard" },
-        { label: "Pricing", path: "/pricing" },
+        { label: 'Problems', path: '/problems' },
+        { label: 'Simulator', path: '/simulator' },
+        { label: 'Dashboard', path: '/dashboard' },
+        { label: 'Pricing', path: '/pricing' },
       ],
     },
     {
-      title: "Learn",
+      title: 'Learn',
       items: [
-        { label: "GPIO", path: "/learn/gpio" },
-        { label: "UART", path: "/learn/uart" },
-        { label: "PWM", path: "/learn/pwm" },
-        { label: "FPGA", path: "/learn/fpga" },
+        { label: 'GPIO', path: '/learn/gpio' },
+        { label: 'UART', path: '/learn/uart' },
+        { label: 'PWM', path: '/learn/pwm' },
+        { label: 'FPGA', path: '/learn/fpga' },
       ],
     },
     {
-      title: "Company",
+      title: 'Company',
       items: [
-        { label: "About", path: "/about" },
-        { label: "Careers", path: "/careers" },
-        { label: "Contact", path: "/contact" },
-        { label: "Blog", path: "/blog" },
+        { label: 'About', path: '/about' },
+        { label: 'Careers', path: '/careers' },
+        { label: 'Contact', path: '/contact' },
+        { label: 'Blog', path: '/blog' },
       ],
     },
   ];
@@ -56,10 +56,7 @@ export function SiteFooter() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               {column.items.map((item) => (
                 <li key={item.label}>
-                  <Link
-                    to={item.path}
-                    className="transition hover:text-foreground"
-                  >
+                  <Link to={item.path} className="transition hover:text-foreground">
                     {item.label}
                   </Link>
                 </li>

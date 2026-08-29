@@ -1,8 +1,8 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import { useAuth } from "../context/AuthContext";
-import logo from "../assets/simcuitLogo.ico";
+import { useAuth } from '../context/AuthContext';
+import logo from '../assets/simcuitLogo.ico';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,22 +13,18 @@ const Navbar = () => {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/logout`,
         {},
-        { withCredentials: true },
+        { withCredentials: true }
       );
 
       setAuth(null);
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
       console.error(error);
     }
   };
 
   const navLinkClass = ({ isActive }) =>
-    `transition ${
-      isActive
-        ? "text-foreground"
-        : "text-muted-foreground hover:text-foreground"
-    }`;
+    `transition ${isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`;
 
   return (
     <header className="sticky top-0 z-40">
@@ -38,9 +34,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2">
             <img src={logo} alt="Simcuits" className="h-8 w-8 object-contain" />
 
-            <span className="font-semibold tracking-tight text-foreground">
-              Simcuits
-            </span>
+            <span className="font-semibold tracking-tight text-foreground">Simcuits</span>
           </Link>
 
           {/* Navigation */}

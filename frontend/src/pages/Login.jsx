@@ -1,42 +1,38 @@
-import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
-import axios from "axios";
-import logo from "../assets/simcuitLogo.ico";
+import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
+import axios from 'axios';
+import logo from '../assets/simcuitLogo.ico';
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    setError("");
+    setError('');
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/auth/login`,
-        form,
-        {
-          withCredentials: true,
-        },
-      );
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, form, {
+        withCredentials: true,
+      });
 
-      console.log("LOGIN RESPONSE:", res.data);
+      console.log('LOGIN RESPONSE:', res.data);
 
       const { accessToken, user } = res.data;
 
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem('accessToken', accessToken);
 
       setAuth({
         accessToken,
@@ -45,20 +41,18 @@ const Login = () => {
       });
 
       // Redirect according to role
-      if (user.role === "admin") {
-        navigate("/");
-      } else if (user.role === "author") {
-        navigate("/");
+      if (user.role === 'admin') {
+        navigate('/');
+      } else if (user.role === 'author') {
+        navigate('/');
       } else {
-        navigate("/");
+        navigate('/');
       }
     } catch (error) {
-      console.error("LOGIN ERROR:", error);
-      console.error("SERVER RESPONSE:", error.response?.data);
+      console.error('LOGIN ERROR:', error);
+      console.error('SERVER RESPONSE:', error.response?.data);
 
-      setError(
-        error.response?.data?.message || "Login failed. Please try again.",
-      );
+      setError(error.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -72,9 +66,7 @@ const Login = () => {
         <Link to="/" className="inline-flex items-center gap-2">
           <img src={logo} alt="Simcuits" className="h-8 w-8 object-contain" />
 
-          <span className="font-display text-base font-semibold tracking-tight">
-            Simcuits
-          </span>
+          <span className="font-display text-base font-semibold tracking-tight">Simcuits</span>
         </Link>
 
         {/* Content */}
@@ -90,8 +82,8 @@ const Login = () => {
           </h2>
 
           <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
-            Write firmware. Inspect waveforms. Validate behavior against real
-            hardware models — without leaving your browser.
+            Write firmware. Inspect waveforms. Validate behavior against real hardware models —
+            without leaving your browser.
           </p>
 
           <figure className="mt-10 border-l-2 border-foreground/80 pl-4">
@@ -123,38 +115,25 @@ const Login = () => {
           <div className="lg:hidden mb-10">
             <Link to="/" className="inline-flex items-center gap-2">
               <div className="h-7 w-7 rounded-md bg-foreground text-background grid place-items-center font-display text-sm font-semibold">
-                <img
-                  src={logo}
-                  alt="Simcuits"
-                  className="h-8 w-8 object-contain"
-                />
+                <img src={logo} alt="Simcuits" className="h-8 w-8 object-contain" />
               </div>
 
-              <span className="font-display text-base font-semibold tracking-tight">
-                Pulse
-              </span>
+              <span className="font-display text-base font-semibold tracking-tight">Pulse</span>
             </Link>
           </div>
 
           {/* Heading */}
           <div className="space-y-1.5">
-            <h1 className="font-display text-3xl font-semibold tracking-tight">
-              Welcome back
-            </h1>
+            <h1 className="font-display text-3xl font-semibold tracking-tight">Welcome back</h1>
 
-            <p className="text-sm text-muted-foreground">
-              Sign in to continue where you left off.
-            </p>
+            <p className="text-sm text-muted-foreground">Sign in to continue where you left off.</p>
           </div>
 
           {/* Login Form */}
           <form className="space-y-4" onSubmit={handleLogin}>
             {/* Email */}
             <div className="space-y-1.5">
-              <label
-                htmlFor="email"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="email" className="text-xs font-medium text-foreground">
                 Email
               </label>
 
@@ -177,10 +156,7 @@ const Login = () => {
             {/* Password */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="text-xs font-medium text-foreground"
-                >
+                <label htmlFor="password" className="text-xs font-medium text-foreground">
                   Password
                 </label>
 
@@ -217,19 +193,17 @@ const Login = () => {
               disabled={loading}
               className="group w-full h-10 mt-2 rounded-md bg-primary text-primary-foreground flex items-center justify-center gap-2 text-sm font-medium transition hover:opacity-90 disabled:opacity-50"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? 'Signing in...' : 'Sign in'}
 
               {!loading && (
-                <span className="transition-transform group-hover:translate-x-0.5">
-                  →
-                </span>
+                <span className="transition-transform group-hover:translate-x-0.5">→</span>
               )}
             </button>
           </form>
 
           {/* Register */}
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            New to Pulse?{" "}
+            New to Pulse?{' '}
             <Link
               to="/register"
               className="text-foreground font-medium hover:underline underline-offset-4"
@@ -240,18 +214,12 @@ const Login = () => {
 
           {/* Terms */}
           <p className="mt-10 text-center text-[11px] text-muted-foreground leading-relaxed">
-            By continuing you agree to our{" "}
-            <Link
-              to="/terms"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
+            By continuing you agree to our{' '}
+            <Link to="/terms" className="underline underline-offset-2 hover:text-foreground">
               Terms
-            </Link>{" "}
-            and{" "}
-            <Link
-              to="/privacy"
-              className="underline underline-offset-2 hover:text-foreground"
-            >
+            </Link>{' '}
+            and{' '}
+            <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">
               Privacy Policy
             </Link>
             .

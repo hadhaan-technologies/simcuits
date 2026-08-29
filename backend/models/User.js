@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,19 +21,19 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "user",
-      enum: ["admin", "author", "user"],
+      default: 'user',
+      enum: ['admin', 'author', 'user'],
     },
     bio: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
       maxlength: 500,
     },
 
     location: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
     },
 
@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema(
 
     website: {
       type: String,
-      default: "",
+      default: '',
       trim: true,
     },
 
@@ -103,11 +103,11 @@ const userSchema = new mongoose.Schema(
     solvedProblems: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Problem",
+        ref: 'Problem',
       },
     ],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model('User', userSchema);

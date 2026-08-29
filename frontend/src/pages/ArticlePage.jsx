@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft, ArrowRight, Clock } from 'lucide-react';
 
-import { fetchArticleBySlug, fetchArticles } from "../api/articles";
-import ArticleCard from "../components/ArticleCard";
+import { fetchArticleBySlug, fetchArticles } from '../api/articles';
+import ArticleCard from '../components/ArticleCard';
 
 export default function ArticlePage() {
   const { slug } = useParams();
@@ -12,7 +12,7 @@ export default function ArticlePage() {
   const [publishedArticles, setPublishedArticles] = useState([]);
 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const [progress, setProgress] = useState(0);
 
@@ -20,18 +20,16 @@ export default function ArticlePage() {
     const onScroll = () => {
       const height = document.documentElement.scrollHeight - window.innerHeight;
 
-      setProgress(
-        height > 0 ? Math.min(100, (window.scrollY / height) * 100) : 0,
-      );
+      setProgress(height > 0 ? Math.min(100, (window.scrollY / height) * 100) : 0);
     };
 
     onScroll();
 
-    window.addEventListener("scroll", onScroll, {
+    window.addEventListener('scroll', onScroll, {
       passive: true,
     });
 
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
@@ -47,8 +45,8 @@ export default function ArticlePage() {
         setArticle(articleResponse.article);
         setPublishedArticles(articlesResponse.articles || []);
       } catch (err) {
-        console.error("Failed to load article:", err);
-        setError("Article not found.");
+        console.error('Failed to load article:', err);
+        setError('Article not found.');
       } finally {
         setLoading(false);
       }
@@ -58,9 +56,7 @@ export default function ArticlePage() {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 py-16">Loading article...</div>
-    );
+    return <div className="mx-auto max-w-3xl px-4 py-16">Loading article...</div>;
   }
 
   if (error || !article) {
@@ -81,15 +77,11 @@ export default function ArticlePage() {
   const prev = index > 0 ? publishedArticles[index - 1] : null;
 
   const next =
-    index >= 0 && index < publishedArticles.length - 1
-      ? publishedArticles[index + 1]
-      : null;
+    index >= 0 && index < publishedArticles.length - 1 ? publishedArticles[index + 1] : null;
 
   const related = publishedArticles
     .filter(
-      (item) =>
-        item._id !== article._id &&
-        item.tags?.some((tag) => article.tags?.includes(tag)),
+      (item) => item._id !== article._id && item.tags?.some((tag) => article.tags?.includes(tag))
     )
     .slice(0, 3);
 
@@ -97,10 +89,7 @@ export default function ArticlePage() {
     <div className="min-h-screen">
       {/* Reading progress */}
       <div className="fixed inset-x-0 top-0 z-50 h-1">
-        <div
-          className="h-full bg-primary transition-[width]"
-          style={{ width: `${progress}%` }}
-        />
+        <div className="h-full bg-primary transition-[width]" style={{ width: `${progress}%` }} />
       </div>
 
       <main>
@@ -116,29 +105,21 @@ export default function ArticlePage() {
 
           <article>
             {/* Title */}
-            <h1 className="text-3xl font-bold leading-tight sm:text-4xl">
-              {article.title}
-            </h1>
+            <h1 className="text-3xl font-bold leading-tight sm:text-4xl">{article.title}</h1>
 
             {/* Excerpt */}
             {article.excerpt && (
-              <p className="mt-4 text-lg text-muted-foreground">
-                {article.excerpt}
-              </p>
+              <p className="mt-4 text-lg text-muted-foreground">{article.excerpt}</p>
             )}
 
             {/* Meta */}
             <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               {article.author?.username && (
-                <span className="font-medium text-foreground">
-                  {article.author.username}
-                </span>
+                <span className="font-medium text-foreground">{article.author.username}</span>
               )}
 
               {article.publishedAt && (
-                <span>
-                  {new Date(article.publishedAt).toLocaleDateString()}
-                </span>
+                <span>{new Date(article.publishedAt).toLocaleDateString()}</span>
               )}
 
               <span className="flex items-center gap-1">
@@ -168,10 +149,7 @@ export default function ArticlePage() {
             {article.tags?.length > 0 && (
               <div className="mt-10 flex flex-wrap gap-2 border-t border-white/10 pt-6">
                 {article.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-white/10 px-3 py-1 text-xs"
-                  >
+                  <span key={tag} className="rounded-full border border-white/10 px-3 py-1 text-xs">
                     #{tag}
                   </span>
                 ))}
@@ -185,9 +163,7 @@ export default function ArticlePage() {
                   to={`/learn/${prev.slug}`}
                   className="rounded-xl border border-white/10 p-4 hover:border-primary/40"
                 >
-                  <span className="text-xs text-muted-foreground">
-                    Previous
-                  </span>
+                  <span className="text-xs text-muted-foreground">Previous</span>
 
                   <p className="mt-1 text-sm font-medium">{prev.title}</p>
                 </Link>

@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { useEffect, useMemo, useState } from 'react';
+import { Search } from 'lucide-react';
 
-import { fetchArticles } from "../api/articles";
-import ArticleCard from "../components/ArticleCard";
+import { fetchArticles } from '../api/articles';
+import ArticleCard from '../components/ArticleCard';
 
 export default function Learn() {
   const [articles, setArticles] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const loadArticles = async () => {
@@ -17,13 +17,13 @@ export default function Learn() {
 
         const data = await fetchArticles();
 
-        console.log("PUBLISHED ARTICLES:", data);
+        console.log('PUBLISHED ARTICLES:', data);
 
         setArticles(data.articles || []);
       } catch (err) {
-        console.error("Failed to fetch articles:", err);
+        console.error('Failed to fetch articles:', err);
 
-        setError("Failed to load articles.");
+        setError('Failed to load articles.');
       } finally {
         setLoading(false);
       }
@@ -40,14 +40,12 @@ export default function Learn() {
     }
 
     return articles.filter((article) => {
-      const title = article.title?.toLowerCase() || "";
-      const excerpt = article.excerpt?.toLowerCase() || "";
+      const title = article.title?.toLowerCase() || '';
+      const excerpt = article.excerpt?.toLowerCase() || '';
 
-      const tags = article.tags?.join(" ").toLowerCase() || "";
+      const tags = article.tags?.join(' ').toLowerCase() || '';
 
-      return (
-        title.includes(query) || excerpt.includes(query) || tags.includes(query)
-      );
+      return title.includes(query) || excerpt.includes(query) || tags.includes(query);
     });
   }, [articles, search]);
 
@@ -59,8 +57,7 @@ export default function Learn() {
           <h1 className="text-3xl font-bold sm:text-4xl">Learn</h1>
 
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            A practical library for electronics, embedded systems, Verilog, FPGA
-            and digital design.
+            A practical library for electronics, embedded systems, Verilog, FPGA and digital design.
           </p>
 
           {/* Search */}
@@ -94,9 +91,7 @@ export default function Learn() {
           <div className="py-16 text-center">
             <h2 className="text-xl font-semibold">No articles found</h2>
 
-            <p className="mt-2 text-sm text-muted-foreground">
-              Try a different search term.
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">Try a different search term.</p>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

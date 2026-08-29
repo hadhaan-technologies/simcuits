@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema(
   {
@@ -42,13 +42,13 @@ const articleSchema = new mongoose.Schema(
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     status: {
       type: String,
-      enum: ["draft", "published"],
-      default: "draft",
+      enum: ['draft', 'published'],
+      default: 'draft',
     },
     publishedAt: {
       type: Date,
@@ -66,16 +66,16 @@ const articleSchema = new mongoose.Schema(
       default: 1,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 // speeds up the articles listing page: filter by status, sort by newest
 articleSchema.index({ status: 1, publishedAt: -1 });
 articleSchema.index({ tags: 1 });
 
-articleSchema.pre("save", function () {
-  if (this.isModified("content")) {
-    const content = this.content || "";
+articleSchema.pre('save', function () {
+  if (this.isModified('content')) {
+    const content = this.content || '';
 
     const words = content.trim() ? content.trim().split(/\s+/).length : 0;
 
@@ -83,5 +83,4 @@ articleSchema.pre("save", function () {
   }
 });
 
-export default mongoose.models.Article ||
-  mongoose.model("Article", articleSchema);
+export default mongoose.models.Article || mongoose.model('Article', articleSchema);
