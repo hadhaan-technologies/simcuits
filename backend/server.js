@@ -50,6 +50,13 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
+app.get("/api/problems-test", (req, res) => {
+  res.json({
+    success: true,
+    message: "Problems route is reaching this server",
+  });
+});
+
 app.use("/api/problems", problemRoutes);
 app.use(cookieParser());
 
