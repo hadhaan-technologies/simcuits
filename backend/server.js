@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import articleRoutes from "./routes/articleRoutes.js";
 import path from "path";
+import problemRoutes from "./routes/problemRoutes.js";
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/articles", articleRoutes);
+app.use("/api/problems", problemRoutes);
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 

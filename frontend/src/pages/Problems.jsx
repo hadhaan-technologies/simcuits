@@ -26,9 +26,9 @@ const categories = [
 ];
 
 const difficultyStyles = {
-  Easy: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
-  Medium: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
-  Hard: "text-red-400 bg-red-400/10 border-red-400/20",
+  easy: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+  medium: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20",
+  hard: "text-red-400 bg-red-400/10 border-red-400/20",
 };
 
 function StatusIcon({ status }) {
@@ -76,10 +76,10 @@ function Problems() {
 
     if (role === "author") {
       return (
-        problem.createdBy?._id === user?.id ||
-        problem.createdBy === user?.id ||
-        problem.createdBy?._id === user?._id ||
-        problem.createdBy === user?._id
+        problem.author?._id === user?.id ||
+        problem.author?._id === user?._id ||
+        problem.author === user?.id ||
+        problem.author === user?._id
       );
     }
 
@@ -174,10 +174,10 @@ function Problems() {
 
     const matchesSearch =
       problem.title?.toLowerCase().includes(searchValue) ||
-      problem.category?.toLowerCase().includes(searchValue);
+      problem.tags?.some((tag) => tag.toLowerCase().includes(searchValue));
 
     const matchesCategory =
-      activeCategory === "All" || problem.category === activeCategory;
+      activeCategory === "All" || problem.tags?.includes(activeCategory);
 
     return matchesSearch && matchesCategory;
   });
