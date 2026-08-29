@@ -314,11 +314,6 @@ function Problems() {
                   </span>
                 </div>
 
-                {/* WAVEFORM */}
-                <div className="hidden md:col-span-2 md:block">
-                  <Waveform />
-                </div>
-
                 {/* ESTIMATE */}
                 <div className="hidden text-xs font-mono text-muted-foreground md:col-span-1 md:block">
                   {problem.estimatedTime || "—"}
