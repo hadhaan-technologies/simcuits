@@ -30,7 +30,11 @@ const AppSidebar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true });
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        {},
+        { withCredentials: true },
+      );
 
       setAuth(null);
       navigate("/login");
