@@ -116,7 +116,7 @@ function Home() {
 
           <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
             Solve real engineering problems on simulated hardware. Write firmware, run it, and
-            validate against expected waveforms — all in your browser.
+            validate against expected waveforms all in your browser.
           </p>
 
           <div className="mt-9 flex items-center justify-center gap-3">
@@ -191,13 +191,13 @@ function Home() {
             Engineers from
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-muted-foreground/70 font-mono text-sm">
+          {/* <div className="mt-4 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-muted-foreground/70 font-mono text-sm">
             {['NVIDIA', 'ARM', 'Intel', 'Apple', 'Tesla', 'SpaceX', 'Qualcomm'].map((name) => (
               <span key={name} className="hover:text-foreground transition">
                 {name}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -248,7 +248,7 @@ function Home() {
             <h2 className="text-4xl font-semibold tracking-tight">Problem categories</h2>
 
             <p className="mt-2 text-muted-foreground">
-              From bare-metal basics to advanced protocol stacks.
+              From bare metal basics to advanced protocol stacks.
             </p>
           </div>
 

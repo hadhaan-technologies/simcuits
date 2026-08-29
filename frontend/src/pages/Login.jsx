@@ -111,14 +111,13 @@ const Login = () => {
       {/* RIGHT SIDE */}
       <div className="flex items-center justify-center p-6 sm:p-10">
         <div className="w-full max-w-sm">
-          {/* Mobile Brand */}
           <div className="lg:hidden mb-10">
             <Link to="/" className="inline-flex items-center gap-2">
               <div className="h-7 w-7 rounded-md bg-foreground text-background grid place-items-center font-display text-sm font-semibold">
                 <img src={logo} alt="Simcuits" className="h-8 w-8 object-contain" />
               </div>
 
-              <span className="font-display text-base font-semibold tracking-tight">Pulse</span>
+              <span className="font-display text-base font-semibold tracking-tight">Simcuits</span>
             </Link>
           </div>
 
@@ -160,12 +159,12 @@ const Login = () => {
                   Password
                 </label>
 
-                <Link
+                {/* <Link
                   to="/forgot-password"
                   className="text-xs text-muted-foreground hover:text-foreground"
                 >
                   Forgot?
-                </Link>
+                </Link> */}
               </div>
 
               <input
@@ -203,7 +202,7 @@ const Login = () => {
 
           {/* Register */}
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            New to Pulse?{' '}
+            New to Simcuits?{' '}
             <Link
               to="/register"
               className="text-foreground font-medium hover:underline underline-offset-4"
