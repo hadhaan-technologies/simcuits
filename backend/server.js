@@ -50,12 +50,12 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
+app.use("/api/problems", problemRoutes);
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/articles", articleRoutes);
-app.use("/api/problems", problemRoutes);
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
