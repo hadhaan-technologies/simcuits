@@ -107,13 +107,15 @@ function Problems() {
         setLoading(true);
 
         const token = auth?.accessToken;
-
-        const response = await axios.get("/api/problems", {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/problems`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
           },
-          withCredentials: true,
-        });
+        );
 
         console.log("Problems API response:", response.data);
 
