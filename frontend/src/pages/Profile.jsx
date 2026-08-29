@@ -66,7 +66,6 @@ function Profile() {
   const save = async () => {
     try {
       setSaving(true);
-      
 
       const response = await axios.put(
         "/api/users/me",
@@ -165,13 +164,21 @@ function Profile() {
                     <span className="flex items-center gap-1.5">
                       <LinkIcon className="h-3.5 w-3.5" />
 
-                      {profile.website}
+                      <a
+                        href={
+                          profile.website.startsWith("http")
+                            ? profile.website
+                            : `https://${profile.website}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {profile.website}
+                      </a>
                     </span>
                   )}
                 </div>
               </div>
-
-              {/* PROFILE ACTIONS */}
 
               <div className="flex gap-2">
                 <button
@@ -190,10 +197,6 @@ function Profile() {
                 </button>
               </div>
             </div>
-
-            {/* ================================= */}
-            {/* PROFILE STATS                      */}
-            {/* ================================= */}
 
             <div className="relative mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
@@ -382,10 +385,6 @@ function Profile() {
         </main>
       </div>
 
-      {/* ================================= */}
-      {/* EDIT PROFILE MODAL                 */}
-      {/* ================================= */}
-
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* MODAL BACKDROP */}
@@ -394,8 +393,6 @@ function Profile() {
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-
-          {/* MODAL */}
 
           <div className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-background shadow-2xl">
             {/* MODAL HEADER */}
@@ -438,9 +435,6 @@ function Profile() {
                   }
                 />
               </div>
-
-              {/* BIO */}
-
               <div className="grid gap-1.5">
                 <label htmlFor="p-bio" className="text-sm font-medium">
                   Bio
@@ -491,9 +485,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* MODAL FOOTER */}
-
-            <div className="flex justify-end gap-2 p-6 border-t border-white/5">
+            <div className="flex justify-end gap-2 p-6 border-t border-primary/5">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
