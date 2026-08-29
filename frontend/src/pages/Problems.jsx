@@ -114,9 +114,20 @@ function Problems() {
         withCredentials: true,
       });
 
-      setProblems(response.data.problems || response.data || []);
+      console.log("Problems API response:", response.data);
+
+      const data = response.data;
+
+      const problemList = Array.isArray(data)
+        ? data
+        : Array.isArray(data.problems)
+          ? data.problems
+          : [];
+
+      setProblems(problemList);
     } catch (error) {
       console.error("Failed to fetch problems:", error);
+      setProblems([]);
     } finally {
       setLoading(false);
     }
