@@ -1,6 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { AppSidebar, AppTopbar } from "@/components/AppSidebar";
-
+import React from "react";
+import { Link } from "react-router-dom";
 import {
   Activity,
   Flame,
@@ -12,24 +11,12 @@ import {
   XCircle,
 } from "lucide-react";
 
-export const Route = createFileRoute("/dashboard")({
-  head: () => ({
-    meta: [
-      { title: "Dashboard — Simcuits" },
-      {
-        name: "description",
-        content:
-          "Your embedded systems learning analytics, streaks, and recommended problems.",
-      },
-    ],
-  }),
-  component: Dashboard,
-});
+import { AppSidebar } from "../components/AppSidebar";
 
 function Ring({ value, color = "var(--primary)", label, sub }) {
-  const r = 30;
-  const c = 2 * Math.PI * r;
-  const off = c - (value / 100) * c;
+  const radius = 30;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (value / 100) * circumference;
 
   return (
     <div className="flex items-center gap-4">
@@ -37,7 +24,7 @@ function Ring({ value, color = "var(--primary)", label, sub }) {
         <circle
           cx="40"
           cy="40"
-          r={r}
+          r={radius}
           stroke="var(--border)"
           strokeWidth="6"
           fill="none"
@@ -46,12 +33,12 @@ function Ring({ value, color = "var(--primary)", label, sub }) {
         <circle
           cx="40"
           cy="40"
-          r={r}
+          r={radius}
           stroke={color}
           strokeWidth="6"
           fill="none"
-          strokeDasharray={c}
-          strokeDashoffset={off}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
           strokeLinecap="round"
           style={{
             filter: `drop-shadow(0 0 6px ${color})`,
@@ -72,93 +59,171 @@ function Ring({ value, color = "var(--primary)", label, sub }) {
   );
 }
 
-function Dashboard() {
+function UserDashboard() {
+  const stats = [
+    {
+      icon: Trophy,
+      label: "Problems solved",
+      value: "148",
+      description: "+12 this week",
+      color: "text-cyan-400",
+    },
+    {
+      icon: Flame,
+      label: "Current streak",
+      value: "14d",
+      description: "Best: 32d",
+      color: "text-orange-400",
+    },
+    {
+      icon: Target,
+      label: "Acceptance rate",
+      value: "76%",
+      description: "Top 8%",
+      color: "text-emerald-400",
+    },
+    {
+      icon: Activity,
+      label: "XP earned",
+      value: "2,148",
+      description: "Pro tier",
+      color: "text-violet-400",
+    },
+  ];
+
+  const difficulty = [
+    {
+      name: "Easy",
+      solved: 92,
+      total: 110,
+      color: "var(--emerald)",
+    },
+    {
+      name: "Medium",
+      solved: 48,
+      total: 96,
+      color: "var(--chart-5)",
+    },
+    {
+      name: "Hard",
+      solved: 8,
+      total: 28,
+      color: "var(--destructive)",
+    },
+  ];
+
+  const submissions = [
+    {
+      title: "PWM Dimmer (1 kHz)",
+      language: "Embedded C",
+      status: "Accepted",
+      execution: "342 ms",
+      time: "2m ago",
+      success: true,
+    },
+    {
+      title: "UART Echo @ 115200",
+      language: "Embedded C",
+      status: "Wrong waveform",
+      execution: "—",
+      time: "14m ago",
+      success: false,
+    },
+    {
+      title: "Debounce SW1",
+      language: "C++",
+      status: "Accepted",
+      execution: "118 ms",
+      time: "1h ago",
+      success: true,
+    },
+    {
+      title: "I²C EEPROM read",
+      language: "Embedded C",
+      status: "Time limit",
+      execution: "—",
+      time: "3h ago",
+      success: false,
+    },
+    {
+      title: "ADC moving average",
+      language: "Embedded C",
+      status: "Accepted",
+      execution: "224 ms",
+      time: "yesterday",
+      success: true,
+    },
+  ];
+
+  const recommended = [
+    {
+      title: "SPI Master polling",
+      difficulty: "Medium",
+      color: "var(--chart-5)",
+    },
+    {
+      title: "ISR latency tuning",
+      difficulty: "Hard",
+      color: "var(--destructive)",
+    },
+    {
+      title: "GPIO toggle 1 MHz",
+      difficulty: "Easy",
+      color: "var(--emerald)",
+    },
+  ];
+
   return (
     <div className="min-h-screen flex">
+      {/* Sidebar */}
       <AppSidebar />
 
       <div className="flex-1 min-w-0">
-        <AppTopbar
-          title="Welcome back, Ada"
-          subtitle="You're on a 14-day streak. Keep the signal high."
-          actions={
-            <Link
-              to="/problems"
-              className="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-            >
-              Solve next
-              <ArrowRight className="ml-1 h-4 w-4" />
-            </Link>
-          }
-        />
+        {/* Topbar */}
 
         <main className="p-6 space-y-6 max-w-7xl">
-          {/* ==================== STAT ROW ==================== */}
+          {/* ================= STATS ================= */}
 
-          <div className="grid gap-4 md:grid-cols-4">
-            {[
-              {
-                icon: Trophy,
-                k: "Problems solved",
-                v: "148",
-                d: "+12 this week",
-                c: "text-cyan",
-              },
-              {
-                icon: Flame,
-                k: "Current streak",
-                v: "14d",
-                d: "Best: 32d",
-                c: "text-chart-5",
-              },
-              {
-                icon: Target,
-                k: "Acceptance rate",
-                v: "76%",
-                d: "Top 8%",
-                c: "text-emerald",
-              },
-              {
-                icon: Activity,
-                k: "XP earned",
-                v: "2,148",
-                d: "Pro tier",
-                c: "text-violet",
-              },
-            ].map((s) => (
-              <div
-                key={s.k}
-                className="rounded-2xl border border-white/10 bg-card/40 p-5 relative overflow-hidden"
-              >
-                <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
 
-                <s.icon className={`h-5 w-5 ${s.c}`} />
+              return (
+                <div
+                  key={stat.label}
+                  className="relative overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-5"
+                >
+                  <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
 
-                <div className="mt-4 text-3xl font-semibold tracking-tight">
-                  {s.v}
+                  <Icon className={`h-5 w-5 ${stat.color}`} />
+
+                  <div className="mt-4 text-3xl font-semibold tracking-tight">
+                    {stat.value}
+                  </div>
+
+                  <div className="mt-1 text-xs text-muted-foreground">
+                    {stat.label}
+                  </div>
+
+                  <div className="mt-0.5 text-[11px] font-mono text-muted-foreground/70">
+                    {stat.description}
+                  </div>
                 </div>
-
-                <div className="mt-1 text-xs text-muted-foreground">{s.k}</div>
-
-                <div className="text-[11px] font-mono text-muted-foreground/70 mt-0.5">
-                  {s.d}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* ==================== ACTIVITY + DIFFICULTY ==================== */}
+          {/* ================= ACTIVITY + DIFFICULTY ================= */}
 
           <div className="grid gap-6 lg:grid-cols-3">
             {/* Activity */}
-
             <div className="rounded-2xl border border-white/10 bg-card/40 p-6 lg:col-span-2">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="font-medium">Submission activity</div>
 
                   <div className="text-xs text-muted-foreground">
-                    Last 30 days · waveform view
+                    Last 30 days
                   </div>
                 </div>
 
@@ -167,66 +232,33 @@ function Dashboard() {
                 </span>
               </div>
 
-              <div className="mt-6 h-44 relative rounded-xl border border-white/5 bg-background/40 p-3">
-                <svg
-                  viewBox="0 0 600 140"
-                  className="w-full h-full"
-                  preserveAspectRatio="none"
-                >
-                  <defs>
-                    <linearGradient
-                      id="dashboard-gradient"
-                      x1="0"
-                      x2="0"
-                      y1="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="0%"
-                        stopColor="oklch(0.74 0.18 230)"
-                        stopOpacity="0.5"
-                      />
-
-                      <stop
-                        offset="100%"
-                        stopColor="oklch(0.74 0.18 230)"
-                        stopOpacity="0"
-                      />
-                    </linearGradient>
-                  </defs>
-
-                  {[...Array(7)].map((_, i) => (
-                    <line
-                      key={i}
-                      x1="0"
-                      x2="600"
-                      y1={i * 20}
-                      y2={i * 20}
-                      stroke="var(--border)"
-                      strokeDasharray="2 4"
+              {/* Activity bars */}
+              <div className="mt-6 rounded-xl border border-white/5 bg-background/40 p-5">
+                <div className="flex items-end gap-1 h-40">
+                  {[
+                    25, 40, 20, 55, 35, 70, 45, 60, 30, 75, 50, 85, 65, 90, 55,
+                    80, 45, 70, 60, 95, 65, 75, 50, 85, 70, 90, 55, 80, 65, 95,
+                  ].map((height, index) => (
+                    <div
+                      key={index}
+                      className="flex-1 rounded-t-sm bg-primary/60 transition hover:bg-primary"
+                      style={{
+                        height: `${height}%`,
+                      }}
                     />
                   ))}
+                </div>
 
-                  <path
-                    d="M0 100 L40 90 L80 95 L120 70 L160 75 L200 50 L240 60 L280 35 L320 55 L360 30 L400 45 L440 20 L480 40 L520 25 L560 15 L600 30"
-                    stroke="var(--primary)"
-                    strokeWidth="2"
-                    fill="none"
-                    style={{
-                      filter: "drop-shadow(0 0 6px var(--primary))",
-                    }}
-                  />
-
-                  <path
-                    d="M0 100 L40 90 L80 95 L120 70 L160 75 L200 50 L240 60 L280 35 L320 55 L360 30 L400 45 L440 20 L480 40 L520 25 L560 15 L600 30 L600 140 L0 140 Z"
-                    fill="url(#dashboard-gradient)"
-                  />
-                </svg>
+                <div className="mt-3 flex justify-between text-[10px] text-muted-foreground font-mono">
+                  <span>30d ago</span>
+                  <span>20d</span>
+                  <span>10d</span>
+                  <span>Today</span>
+                </div>
               </div>
             </div>
 
             {/* Difficulty */}
-
             <div className="rounded-2xl border border-white/10 bg-card/40 p-6 space-y-5">
               <div>
                 <div className="font-medium">Difficulty breakdown</div>
@@ -236,49 +268,34 @@ function Dashboard() {
                 </div>
               </div>
 
-              {[
-                {
-                  k: "Easy",
-                  v: 92,
-                  t: 110,
-                  c: "var(--emerald)",
-                },
-                {
-                  k: "Medium",
-                  v: 48,
-                  t: 96,
-                  c: "var(--chart-5)",
-                },
-                {
-                  k: "Hard",
-                  v: 8,
-                  t: 28,
-                  c: "var(--destructive)",
-                },
-              ].map((d) => (
-                <div key={d.k}>
-                  <div className="flex justify-between text-xs">
-                    <span>{d.k}</span>
+              {difficulty.map((item) => {
+                const percentage = (item.solved / item.total) * 100;
 
-                    <span className="font-mono text-muted-foreground">
-                      {d.v}/{d.t}
-                    </span>
+                return (
+                  <div key={item.name}>
+                    <div className="flex justify-between text-xs">
+                      <span>{item.name}</span>
+
+                      <span className="font-mono text-muted-foreground">
+                        {item.solved}/{item.total}
+                      </span>
+                    </div>
+
+                    <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/5">
+                      <div
+                        className="h-full rounded-full"
+                        style={{
+                          width: `${percentage}%`,
+                          background: item.color,
+                          boxShadow: `0 0 10px ${item.color}`,
+                        }}
+                      />
+                    </div>
                   </div>
+                );
+              })}
 
-                  <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
-                    <div
-                      className="h-full rounded-full"
-                      style={{
-                        width: `${(d.v / d.t) * 100}%`,
-                        background: d.c,
-                        boxShadow: `0 0 10px ${d.c}`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              <div className="pt-2 border-t border-white/5">
+              <div className="border-t border-white/5 pt-4">
                 <Ring
                   value={63}
                   label="Overall progress"
@@ -288,9 +305,10 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* ==================== RECENT SUBMISSIONS ==================== */}
+          {/* ================= SUBMISSIONS + RECOMMENDED ================= */}
 
           <div className="grid gap-6 lg:grid-cols-3">
+            {/* Recent submissions */}
             <div className="rounded-2xl border border-white/10 bg-card/40 p-6 lg:col-span-2">
               <div className="flex items-center justify-between">
                 <div className="font-medium">Recent submissions</div>
@@ -304,73 +322,32 @@ function Dashboard() {
               </div>
 
               <div className="mt-4 divide-y divide-white/5">
-                {[
-                  {
-                    t: "PWM Dimmer (1 kHz)",
-                    l: "Embedded C",
-                    s: "Accepted",
-                    d: "342 ms",
-                    time: "2m ago",
-                    ok: true,
-                  },
-                  {
-                    t: "UART Echo @ 115200",
-                    l: "Embedded C",
-                    s: "Wrong waveform",
-                    d: "—",
-                    time: "14m ago",
-                    ok: false,
-                  },
-                  {
-                    t: "Debounce SW1",
-                    l: "C++",
-                    s: "Accepted",
-                    d: "118 ms",
-                    time: "1h ago",
-                    ok: true,
-                  },
-                  {
-                    t: "I²C EEPROM read",
-                    l: "Embedded C",
-                    s: "Time limit",
-                    d: "—",
-                    time: "3h ago",
-                    ok: false,
-                  },
-                  {
-                    t: "ADC moving average",
-                    l: "Embedded C",
-                    s: "Accepted",
-                    d: "224 ms",
-                    time: "yesterday",
-                    ok: true,
-                  },
-                ].map((r) => (
+                {submissions.map((submission) => (
                   <div
-                    key={r.t}
-                    className="py-3 flex items-center gap-3 text-sm"
+                    key={submission.title}
+                    className="flex items-center gap-3 py-3 text-sm"
                   >
-                    {r.ok ? (
-                      <CheckCircle2 className="h-4 w-4 text-emerald" />
+                    {submission.success ? (
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                     ) : (
                       <XCircle className="h-4 w-4 text-destructive" />
                     )}
 
-                    <div className="flex-1 min-w-0">
-                      <div className="truncate">{r.t}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate">{submission.title}</div>
 
-                      <div className="text-xs text-muted-foreground font-mono">
-                        {r.l} · {r.s}
+                      <div className="text-xs font-mono text-muted-foreground">
+                        {submission.language} · {submission.status}
                       </div>
                     </div>
 
-                    <div className="text-xs font-mono text-muted-foreground hidden md:block">
-                      {r.d}
+                    <div className="hidden text-xs font-mono text-muted-foreground md:block">
+                      {submission.execution}
                     </div>
 
-                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3" />
-                      {r.time}
+                      {submission.time}
                     </div>
                   </div>
                 ))}
@@ -378,7 +355,6 @@ function Dashboard() {
             </div>
 
             {/* Recommended */}
-
             <div className="rounded-2xl border border-white/10 bg-card/40 p-6">
               <div className="font-medium">Recommended next</div>
 
@@ -387,40 +363,29 @@ function Dashboard() {
               </div>
 
               <div className="mt-4 space-y-3">
-                {[
-                  {
-                    t: "SPI Master polling",
-                    d: "Medium",
-                    g: "var(--chart-5)",
-                  },
-                  {
-                    t: "ISR latency tuning",
-                    d: "Hard",
-                    g: "var(--destructive)",
-                  },
-                  {
-                    t: "GPIO toggle 1 MHz",
-                    d: "Easy",
-                    g: "var(--emerald)",
-                  },
-                ].map((p) => (
+                {recommended.map((problem) => (
                   <Link
-                    to="/editor"
-                    key={p.t}
-                    className="block rounded-xl border border-white/5 p-4 hover:border-primary/40 transition group"
+                    to="/problems"
+                    key={problem.title}
+                    className="block rounded-xl border border-white/5 p-4 transition hover:border-primary/40 hover:bg-white/[0.03]"
                   >
                     <div className="flex items-center justify-between">
-                      <div className="text-sm font-medium">{p.t}</div>
+                      <div className="text-sm font-medium">{problem.title}</div>
 
                       <span
-                        className="text-[10px] font-mono px-1.5 py-0.5 rounded"
+                        className="rounded px-1.5 py-0.5 text-[10px] font-mono"
                         style={{
-                          color: p.g,
-                          background: p.g.replace(")", " / 0.12)"),
+                          color: problem.color,
+                          background: "rgba(255,255,255,0.05)",
                         }}
                       >
-                        {p.d}
+                        {problem.difficulty}
                       </span>
+                    </div>
+
+                    <div className="mt-3 text-xs text-muted-foreground">
+                      Practice this problem to improve your performance in this
+                      area.
                     </div>
                   </Link>
                 ))}
@@ -433,4 +398,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default UserDashboard;
