@@ -19,6 +19,7 @@ import AuthorDashboard from "./pages/AuthorDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import Learn from "./pages/Learn";
 import ArticlePage from "./pages/ArticlePage";
+import { SiteFooter } from "./components/SiteFooter";
 
 // ========================================
 // APP LAYOUT
@@ -125,6 +126,7 @@ function AppLayout() {
           </Routes>
         </div>
       </div>
+      {showNavbar && <SiteFooter />}
     </div>
   );
 }
