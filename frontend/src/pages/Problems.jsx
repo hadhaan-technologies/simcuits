@@ -101,41 +101,43 @@ function Problems() {
     return false;
   };
 
-  const fetchProblems = async () => {
-    try {
-      setLoading(true);
-
-      const token = auth?.accessToken;
-
-      const response = await axios.get("/api/problems", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
-
-      console.log("Problems API response:", response.data);
-
-      const data = response.data;
-
-      const problemList = Array.isArray(data)
-        ? data
-        : Array.isArray(data.problems)
-          ? data.problems
-          : [];
-
-      setProblems(problemList);
-    } catch (error) {
-      console.error("Failed to fetch problems:", error);
-      setProblems([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchProblems();
-  }, []);
+    const fetchProblems = async () => {
+      try {
+        setLoading(true);
+
+        const token = auth?.accessToken;
+
+        const response = await axios.get("/api/problems", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+
+        console.log("Problems API response:", response.data);
+
+        const data = response.data;
+
+        const problemList = Array.isArray(data)
+          ? data
+          : Array.isArray(data.problems)
+            ? data.problems
+            : [];
+
+        setProblems(problemList);
+      } catch (error) {
+        console.error("Failed to fetch problems:", error);
+        setProblems([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (auth?.accessToken) {
+      fetchProblems();
+    }
+  }, [auth?.accessToken]);
 
   const handleDelete = async (problemId) => {
     const confirmed = window.confirm(
