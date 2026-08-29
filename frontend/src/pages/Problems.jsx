@@ -11,7 +11,6 @@ import {
   Pencil,
   Trash2,
 } from "lucide-react";
-
 import { useAuth } from "../context/AuthContext";
 
 const categories = [
@@ -68,7 +67,6 @@ function Problems() {
   const [loading, setLoading] = useState(true);
 
   const user = auth?.user || auth;
-
   const role = user?.role;
 
   const canCreate = role === "admin" || role === "author";
@@ -78,7 +76,10 @@ function Problems() {
 
     if (role === "author") {
       return (
-        problem.createdBy?._id === user?.id || problem.createdBy === user?.id
+        problem.createdBy?._id === user?.id ||
+        problem.createdBy === user?.id ||
+        problem.createdBy?._id === user?._id ||
+        problem.createdBy === user?._id
       );
     }
 
@@ -90,16 +91,15 @@ function Problems() {
 
     if (role === "author") {
       return (
-        problem.createdBy?._id === user?.id || problem.createdBy === user?.id
+        problem.createdBy?._id === user?.id ||
+        problem.createdBy === user?.id ||
+        problem.createdBy?._id === user?._id ||
+        problem.createdBy === user?._id
       );
     }
 
     return false;
   };
-
-//   useEffect(() => {
-//     fetchProblems();
-//   }, []);
 
   const fetchProblems = async () => {
     try {
@@ -121,6 +121,10 @@ function Problems() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProblems();
+  }, []);
 
   const handleDelete = async (problemId) => {
     const confirmed = window.confirm(
@@ -151,9 +155,11 @@ function Problems() {
   };
 
   const filteredProblems = problems.filter((problem) => {
+    const searchValue = search.toLowerCase();
+
     const matchesSearch =
-      problem.title?.toLowerCase().includes(search.toLowerCase()) ||
-      problem.category?.toLowerCase().includes(search.toLowerCase());
+      problem.title?.toLowerCase().includes(searchValue) ||
+      problem.category?.toLowerCase().includes(searchValue);
 
     const matchesCategory =
       activeCategory === "All" || problem.category === activeCategory;
@@ -163,7 +169,7 @@ function Problems() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <main className="p-6 space-y-6 max-w-7xl mx-auto">
+      <main className="mx-auto max-w-7xl space-y-6 p-6">
         {/* PAGE HEADER */}
         <div className="flex items-center justify-between gap-4">
           <div>
@@ -174,11 +180,11 @@ function Problems() {
             </p>
           </div>
 
-          {/* ONLY ADMIN + AUTHOR */}
+          {/* ADMIN + AUTHOR ONLY */}
           {canCreate && (
             <Link
               to="/problems/create"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
             >
               <Plus className="h-4 w-4" />
               Create problem
@@ -187,22 +193,22 @@ function Problems() {
         </div>
 
         {/* SEARCH */}
-        <div className="flex flex-col md:flex-row gap-3">
+        <div className="flex flex-col gap-3 md:flex-row">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 
             <input
               type="text"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search by title, category..."
-              className="w-full h-11 rounded-lg border border-white/10 bg-background/50 pl-10 pr-4 text-sm outline-none focus:border-primary/50"
+              className="h-11 w-full rounded-lg border border-white/10 bg-background/50 pl-10 pr-4 text-sm outline-none transition focus:border-primary/50"
             />
           </div>
 
           <button
             type="button"
-            className="h-11 px-4 rounded-lg border border-white/10 bg-background/50 flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
+            className="flex h-11 items-center justify-center gap-2 rounded-lg border border-white/10 bg-background/50 px-4 text-sm text-muted-foreground transition hover:text-foreground"
           >
             <Filter className="h-4 w-4" />
             Filters
@@ -219,10 +225,10 @@ function Problems() {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`px-3 py-1.5 rounded-full text-xs border transition ${
+                className={`rounded-full border px-3 py-1.5 text-xs transition ${
                   active
-                    ? "bg-primary/15 border-primary/40 text-foreground"
-                    : "border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20"
+                    ? "border-primary/40 bg-primary/15 text-foreground"
+                    : "border-white/10 text-muted-foreground hover:border-white/20 hover:text-foreground"
                 }`}
               >
                 {category}
@@ -232,9 +238,9 @@ function Problems() {
         </div>
 
         {/* PROBLEMS TABLE */}
-        <div className="rounded-2xl border border-white/10 bg-card/40 overflow-hidden">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-card/40">
           {/* TABLE HEADER */}
-          <div className="hidden md:grid grid-cols-12 px-5 py-3 text-[11px] uppercase tracking-wider text-muted-foreground border-b border-white/5 font-medium">
+          <div className="hidden grid-cols-12 border-b border-white/5 px-5 py-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground md:grid">
             <div className="col-span-1">#</div>
             <div className="col-span-4">Problem</div>
             <div className="col-span-2">Category</div>
@@ -263,10 +269,10 @@ function Problems() {
             filteredProblems.map((problem, index) => (
               <div
                 key={problem._id || problem.id}
-                className="grid grid-cols-1 md:grid-cols-12 items-center px-5 py-4 border-b border-white/5 hover:bg-white/[0.03] transition group"
+                className="grid grid-cols-1 items-center border-b border-white/5 px-5 py-4 transition group hover:bg-white/[0.03] md:grid-cols-12"
               >
                 {/* NUMBER + STATUS */}
-                <div className="md:col-span-1 flex items-center gap-2">
+                <div className="flex items-center gap-2 md:col-span-1">
                   <StatusIcon status={problem.status} />
 
                   <span className="font-mono text-xs text-muted-foreground">
@@ -275,33 +281,33 @@ function Problems() {
                 </div>
 
                 {/* TITLE */}
-                <div className="md:col-span-4 mt-2 md:mt-0">
+                <div className="mt-2 md:col-span-4 md:mt-0">
                   <Link
                     to={`/problems/${problem._id}`}
-                    className="text-sm font-medium group-hover:text-primary transition"
+                    className="text-sm font-medium transition group-hover:text-primary"
                   >
                     {problem.title}
                   </Link>
 
                   {/* MOBILE CATEGORY */}
-                  <div className="md:hidden mt-2 text-xs text-muted-foreground">
+                  <div className="mt-2 text-xs text-muted-foreground md:hidden">
                     {problem.category}
                   </div>
                 </div>
 
                 {/* CATEGORY */}
-                <div className="hidden md:block md:col-span-2">
-                  <span className="text-xs px-2 py-1 rounded border border-white/10 text-muted-foreground">
+                <div className="hidden md:col-span-2 md:block">
+                  <span className="rounded border border-white/10 px-2 py-1 text-xs text-muted-foreground">
                     {problem.category}
                   </span>
                 </div>
 
                 {/* DIFFICULTY */}
-                <div className="hidden md:block md:col-span-1">
+                <div className="hidden md:col-span-1 md:block">
                   <span
-                    className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                    className={`rounded border px-2 py-0.5 font-mono text-[10px] ${
                       difficultyStyles[problem.difficulty] ||
-                      "text-muted-foreground border-white/10"
+                      "border-white/10 text-muted-foreground"
                     }`}
                   >
                     {problem.difficulty}
@@ -309,33 +315,34 @@ function Problems() {
                 </div>
 
                 {/* WAVEFORM */}
-                <div className="hidden md:block md:col-span-2">
+                <div className="hidden md:col-span-2 md:block">
                   <Waveform />
                 </div>
 
                 {/* ESTIMATE */}
-                <div className="hidden md:block md:col-span-1 text-xs text-muted-foreground font-mono">
+                <div className="hidden text-xs font-mono text-muted-foreground md:col-span-1 md:block">
                   {problem.estimatedTime || "—"}
                 </div>
 
                 {/* ACTIONS */}
-                <div className="md:col-span-1 flex justify-end gap-1 mt-3 md:mt-0">
-                  {/* AUTHOR OWN PROBLEM / ADMIN */}
+                <div className="mt-3 flex justify-end gap-1 md:col-span-1 md:mt-0">
+                  {/* EDIT */}
                   {canEdit(problem) && (
                     <Link
                       to={`/problems/${problem._id}/edit`}
-                      className="p-2 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/10 transition"
+                      className="rounded-md p-2 text-muted-foreground transition hover:bg-primary/10 hover:text-primary"
                       title="Edit problem"
                     >
                       <Pencil className="h-4 w-4" />
                     </Link>
                   )}
 
+                  {/* DELETE */}
                   {canDelete(problem) && (
                     <button
                       type="button"
                       onClick={() => handleDelete(problem._id)}
-                      className="p-2 rounded-md text-muted-foreground hover:text-red-400 hover:bg-red-400/10 transition"
+                      className="rounded-md p-2 text-muted-foreground transition hover:bg-red-400/10 hover:text-red-400"
                       title="Delete problem"
                     >
                       <Trash2 className="h-4 w-4" />
