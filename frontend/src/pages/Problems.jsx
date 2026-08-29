@@ -213,7 +213,7 @@ function Problems() {
       const token = auth?.accessToken;
 
       const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/problems`,
+        `${import.meta.env.VITE_API_BASE_URL}/problems`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
