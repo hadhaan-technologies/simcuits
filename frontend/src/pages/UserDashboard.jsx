@@ -183,7 +183,7 @@ function UserDashboard() {
                   key={stat.label}
                   className="relative overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-5"
                 >
-                  <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
+                  {/* <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/10 blur-2xl " /> */}
 
                   <Icon className={`h-5 w-5 ${stat.color}`} />
 
