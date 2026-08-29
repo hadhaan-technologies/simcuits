@@ -9,7 +9,6 @@ import {
   Clock,
   XCircle,
 } from "lucide-react";
-import AppSidebar from "../components/AppSideBar";
 
 function Ring({ value, color = "var(--primary)", label, sub }) {
   const radius = 30;
@@ -173,12 +172,8 @@ function UserDashboard() {
 
   return (
     <div className="min-h-screen flex">
-      <AppSidebar />
-
       <div className="flex-1 min-w-0">
         <main className="p-6 space-y-6 max-w-7xl">
-          {/* ================= STATS ================= */}
-
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => {
               const Icon = stat.icon;
