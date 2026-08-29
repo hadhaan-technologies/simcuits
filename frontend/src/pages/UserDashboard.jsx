@@ -5,13 +5,11 @@ import {
   Flame,
   Trophy,
   Target,
-  ArrowRight,
   CheckCircle2,
   Clock,
   XCircle,
 } from "lucide-react";
-
-import { AppSidebar } from "../components/AppSidebar";
+import AppSidebar from "../components/AppSideBar";
 
 function Ring({ value, color = "var(--primary)", label, sub }) {
   const radius = 30;
@@ -175,12 +173,9 @@ function UserDashboard() {
 
   return (
     <div className="min-h-screen flex">
-      {/* Sidebar */}
       <AppSidebar />
 
       <div className="flex-1 min-w-0">
-        {/* Topbar */}
-
         <main className="p-6 space-y-6 max-w-7xl">
           {/* ================= STATS ================= */}
 
