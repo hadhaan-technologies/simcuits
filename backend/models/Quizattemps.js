@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const answerSchema = new mongoose.Schema(
   {
@@ -65,7 +65,7 @@ const attemptSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// One attempt per student per quiz. Change this if you want to allow retakes.
 attemptSchema.index({ quiz: 1, student: 1 }, { unique: true });
 
-module.exports = mongoose.model('QuizAttempt', attemptSchema);
+const QuizAttempt = mongoose.model('QuizAttempt', attemptSchema);
+export default QuizAttempt;

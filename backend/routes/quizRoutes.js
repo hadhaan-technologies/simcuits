@@ -1,27 +1,48 @@
-const express = require('express');
+import express from 'express';
+
+import {
+  createQuiz,
+  listQuizzesForFaculty,
+  getQuizForFaculty,
+  getResultsForFaculty,
+  listQuizzesForStudent,
+  startAttempt,
+  saveAnswer,
+  logViolation,
+  submitAttempt,
+  getMyResult,
+} from '../controllers/quizController.js';
+
+import { verifyToken, requireRole } from '../middleware/authMiddleware.js';
+
 const router = express.Router();
-const quiz = require('../controllers/quizController');
 
-// requireRole('faculty') / requireRole('student') should 403 on mismatch.
-const { verifyToken, requireRole } = require('../middleware/authMiddleware');
+/* =========================================================
+   FACULTY
+   ========================================================= */
 
-// ---- Faculty ----
-router.post('/', verifyToken, requireRole('faculty'), quiz.createQuiz);
-router.get('/faculty/mine', verifyToken, requireRole('faculty'), quiz.listQuizzesForFaculty);
-router.get('/faculty/:id', verifyToken, requireRole('faculty'), quiz.getQuizForFaculty);
-router.get('/faculty/:id/results', verifyToken, requireRole('faculty'), quiz.getResultsForFaculty);
+router.post('/', verifyToken, requireRole('faculty'), createQuiz);
 
-// ---- Student ----
-router.get('/available', verifyToken, requireRole('student'), quiz.listQuizzesForStudent);
-router.post('/:id/start', verifyToken, requireRole('student'), quiz.startAttempt);
-router.post('/attempt/:attemptId/answer', verifyToken, requireRole('student'), quiz.saveAnswer);
-router.post(
-  '/attempt/:attemptId/violation',
-  verifyToken,
-  requireRole('student'),
-  quiz.logViolation
-);
-router.post('/attempt/:attemptId/submit', verifyToken, requireRole('student'), quiz.submitAttempt);
-router.get('/:id/my-result', verifyToken, requireRole('student'), quiz.getMyResult);
+router.get('/faculty/mine', verifyToken, requireRole('faculty'), listQuizzesForFaculty);
+
+router.get('/faculty/:id', verifyToken, requireRole('faculty'), getQuizForFaculty);
+
+router.get('/faculty/:id/results', verifyToken, requireRole('faculty'), getResultsForFaculty);
+
+/* =========================================================
+   STUDENT
+   ========================================================= */
+
+router.get('/available', verifyToken, requireRole('student'), listQuizzesForStudent);
+
+router.post('/:id/start', verifyToken, requireRole('student'), startAttempt);
+
+router.post('/attempt/:attemptId/answer', verifyToken, requireRole('student'), saveAnswer);
+
+router.post('/attempt/:attemptId/violation', verifyToken, requireRole('student'), logViolation);
+
+router.post('/attempt/:attemptId/submit', verifyToken, requireRole('student'), submitAttempt);
+
+router.get('/:id/my-result', verifyToken, requireRole('student'), getMyResult);
 
 export default router;
