@@ -23,8 +23,8 @@ app.get('/health', (req, res) => {
 });
 
 const allowedOrigins = [
-  'http://localhost:5173',
   'https://simcuits.founders-c77.workers.dev',
+  'http://localhost:5173',
   'https://simcuits.hadhaan.com',
 ];
 
