@@ -64,7 +64,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
-app.use('/api/quizzes', quizRoutes);
+app.use('/api/quiz', quizRoutes);
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 

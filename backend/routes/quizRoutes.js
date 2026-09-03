@@ -24,4 +24,4 @@ router.post(
 router.post('/attempt/:attemptId/submit', verifyToken, requireRole('student'), quiz.submitAttempt);
 router.get('/:id/my-result', verifyToken, requireRole('student'), quiz.getMyResult);
 
-module.exports = router;
+export default router;
