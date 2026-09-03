@@ -23,8 +23,8 @@ import ArticlePage from './pages/ArticlePage';
 
 import { SiteFooter } from './components/SiteFooter';
 
-import QuizBuilder from './pages/QuizBuilder';
-import QuizTaker from './pages/QuizTaker';
+import QuizBuilder from './components/QuizBuilder';
+import QuizTaker from './components/QuizTaker';
 
 /* ========================================
    QUIZ TAKER WRAPPER
@@ -142,17 +142,8 @@ function AppLayout() {
               }
             />
 
-            {/* ==============================
-                PROBLEMS
-            ============================== */}
-
             <Route path="/problems" element={<Problems />} />
 
-            {/* ==============================
-                QUIZ
-            ============================== */}
-
-            {/* Faculty → Create Quiz */}
             <Route
               path="/quiz/create"
               element={
@@ -162,7 +153,6 @@ function AppLayout() {
               }
             />
 
-            {/* Student → Take Quiz */}
             <Route
               path="/quiz/:quizId"
               element={
@@ -172,7 +162,6 @@ function AppLayout() {
               }
             />
 
-            {/* /quiz → send user to appropriate quiz page */}
             <Route
               path="/quiz"
               element={
@@ -193,10 +182,6 @@ function AppLayout() {
                 </PrivateRoute>
               }
             />
-
-            {/* ==============================
-                FALLBACK
-            ============================== */}
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
