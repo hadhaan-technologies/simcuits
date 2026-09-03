@@ -8,6 +8,7 @@ import userRoutes from './routes/users.js';
 import articleRoutes from './routes/articleRoutes.js';
 import path from 'path';
 import problemRoutes from './routes/problemRoutes.js';
+const quizRoutes = require('./routes/quizRoutes');
 
 dotenv.config();
 
@@ -63,6 +64,7 @@ app.use(cookieParser());
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/articles', articleRoutes);
+app.use('/api/quizzes', quizRoutes);
 
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
