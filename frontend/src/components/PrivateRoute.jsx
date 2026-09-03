@@ -5,13 +5,16 @@ export default function PrivateRoute({ children, allowedRoles }) {
   const { auth, loading } = useAuth();
 
   if (loading) {
-    return <div>Loading....</div>;
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
-  if (!auth || !auth.accessToken) {
-    return <Navigate to="/login" />;
+
+  if (!auth?.accessToken) {
+    return <Navigate to="/login" replace />;
   }
+
   if (allowedRoles && !allowedRoles.includes(auth.role)) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
+
   return typeof children === 'function' ? children(auth) : children;
 }
