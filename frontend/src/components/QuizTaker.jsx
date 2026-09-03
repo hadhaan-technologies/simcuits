@@ -34,7 +34,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     submittedRef.current = true;
     try {
       const { data } = await axios.post(
-        `${apiBaseUrl}/quizzes/attempt/${attemptIdRef.current}/submit`,
+        `${apiBaseUrl}/quiz/attempt/${attemptIdRef.current}/submit`,
         {},
         authHeaders
       );
@@ -53,7 +53,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     if (submittedRef.current || !attemptIdRef.current) return;
     try {
       const { data } = await axios.post(
-        `${apiBaseUrl}/quizzes/attempt/${attemptIdRef.current}/violation`,
+        `${apiBaseUrl}/quiz/attempt/${attemptIdRef.current}/violation`,
         { type },
         authHeaders
       );
@@ -88,7 +88,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
       // below simply won't fire in that case.
     }
     try {
-      const { data } = await axios.post(`${apiBaseUrl}/quizzes/${quizId}/start`, {}, authHeaders);
+      const { data } = await axios.post(`${apiBaseUrl}/quiz/${quizId}/start`, {}, authHeaders);
       setAttemptId(data.attemptId);
       attemptIdRef.current = data.attemptId;
       setQuestions(data.questions);
@@ -171,7 +171,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     setAnswers((prev) => ({ ...prev, [questionId]: shuffledIndex }));
     try {
       await axios.post(
-        `${apiBaseUrl}/quizzes/attempt/${attemptId}/answer`,
+        `${apiBaseUrl}/quiz/attempt/${attemptId}/answer`,
         { questionId, selectedOptionShuffledIndex: shuffledIndex },
         authHeaders
       );

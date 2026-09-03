@@ -59,7 +59,7 @@ export default function QuizBuilder({ apiBaseUrl = '/api', authToken }) {
     setSaving(true);
     try {
       await axios.post(
-        `${apiBaseUrl}/quizzes`,
+        `${apiBaseUrl}/quiz`,
         {
           title,
           description,
