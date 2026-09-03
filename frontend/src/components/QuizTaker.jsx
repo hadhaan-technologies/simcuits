@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const RULES = [
   'The test opens in fullscreen the moment you click "Begin test", and the timer starts immediately.',
@@ -9,7 +10,7 @@ const RULES = [
   'Make sure you have a stable internet connection before you begin - the timer does not pause.',
 ];
 
-export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFinished }) {
+export default function QuizTaker({ quizId, API_BASE_URL = '/api', authToken, onFinished }) {
   const [phase, setPhase] = useState('instructions'); // instructions | starting | in_progress | submitted | error
   const [attemptId, setAttemptId] = useState(null);
   const [questions, setQuestions] = useState([]);
@@ -34,7 +35,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     submittedRef.current = true;
     try {
       const { data } = await axios.post(
-        `${apiBaseUrl}/quiz/attempt/${attemptIdRef.current}/submit`,
+        `${API_BASE_URL}/quiz/attempt/${attemptIdRef.current}/submit`,
         {},
         authHeaders
       );
@@ -53,7 +54,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     if (submittedRef.current || !attemptIdRef.current) return;
     try {
       const { data } = await axios.post(
-        `${apiBaseUrl}/quiz/attempt/${attemptIdRef.current}/violation`,
+        `${API_BASE_URL}/quiz/attempt/${attemptIdRef.current}/violation`,
         { type },
         authHeaders
       );
@@ -88,7 +89,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
       // below simply won't fire in that case.
     }
     try {
-      const { data } = await axios.post(`${apiBaseUrl}/quiz/${quizId}/start`, {}, authHeaders);
+      const { data } = await axios.post(`${API_BASE_URL}/quiz/${quizId}/start`, {}, authHeaders);
       setAttemptId(data.attemptId);
       attemptIdRef.current = data.attemptId;
       setQuestions(data.questions);
@@ -171,7 +172,7 @@ export default function QuizTaker({ quizId, apiBaseUrl = '/api', authToken, onFi
     setAnswers((prev) => ({ ...prev, [questionId]: shuffledIndex }));
     try {
       await axios.post(
-        `${apiBaseUrl}/quiz/attempt/${attemptId}/answer`,
+        `${API_BASE_URL}/quiz/attempt/${attemptId}/answer`,
         { questionId, selectedOptionShuffledIndex: shuffledIndex },
         authHeaders
       );

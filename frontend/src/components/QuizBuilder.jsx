@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const EMPTY_QUESTION = () => ({
   questionText: '',
@@ -8,7 +9,7 @@ const EMPTY_QUESTION = () => ({
   marks: 1,
 });
 
-export default function QuizBuilder({ apiBaseUrl = '/api', authToken }) {
+export default function QuizBuilder({ API_BASE_URL = '/api', authToken }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [department, setDepartment] = useState('');
@@ -59,7 +60,7 @@ export default function QuizBuilder({ apiBaseUrl = '/api', authToken }) {
     setSaving(true);
     try {
       await axios.post(
-        `${apiBaseUrl}/quiz`,
+        `${API_BASE_URL}/quiz`,
         {
           title,
           description,
