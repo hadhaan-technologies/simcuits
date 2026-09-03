@@ -8,7 +8,7 @@ import userRoutes from './routes/users.js';
 import articleRoutes from './routes/articleRoutes.js';
 import path from 'path';
 import problemRoutes from './routes/problemRoutes.js';
-const quizRoutes = require('./routes/quizRoutes.js');
+import quizRoutes from './routes/quizRoutes.js';
 
 dotenv.config();
 
